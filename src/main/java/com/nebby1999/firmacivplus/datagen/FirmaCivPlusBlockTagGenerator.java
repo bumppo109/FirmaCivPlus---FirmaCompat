@@ -16,6 +16,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,32 +39,37 @@ public class FirmaCivPlusBlockTagGenerator extends BlockTagsProvider
         FirmaCivPlusBlocks.getCanoeComponentBlocks().forEach((watercraftMaterial, canoeComponentBlockRegistryObject) ->
         {
             tag(FirmacivTags.Blocks.CANOE_COMPONENT_BLOCKS)
-                    .add(canoeComponentBlockRegistryObject.get());
+                    .addOptional(getResourceLocation(canoeComponentBlockRegistryObject.get()));
 
             tag(FirmacivTags.Blocks.CAN_MAKE_CANOE)
-                    .add(watercraftMaterial.getWood().getBlock(Wood.BlockType.STRIPPED_LOG).get());
+                    .addOptional(getResourceLocation(watercraftMaterial.getWood().getBlock(Wood.BlockType.STRIPPED_LOG).get()));
             tag(FirmacivTags.Blocks.CAN_MAKE_CANOE_UNRESTRICTED)
-                    .add(watercraftMaterial.getWood().getBlock(Wood.BlockType.STRIPPED_LOG).get());
+                    .addOptional(getResourceLocation(watercraftMaterial.getWood().getBlock(Wood.BlockType.STRIPPED_LOG).get()));
         });
 
         FirmaCivPlusBlocks.getWoodenBoatFrameFlatBlocks().forEach((watercraftMaterial, firmacivFlatWoodenBoatFrameBlockRegistryObject) ->
         {
             tag(AlekiShipsTags.Blocks.WOODEN_WATERCRAFT_FRAMES)
-                    .add(firmacivFlatWoodenBoatFrameBlockRegistryObject.get());
+                    .addOptional(getResourceLocation(firmacivFlatWoodenBoatFrameBlockRegistryObject.get()));
         });
 
         FirmaCivPlusBlocks.getWoodenBoatFrameAngledBlocks().forEach((watercraftMaterial, firmacivAngledWoodenBoatFrameBlockRegistryObject) ->
         {
             tag(AlekiShipsTags.Blocks.WOODEN_WATERCRAFT_FRAMES)
-                    .add(firmacivAngledWoodenBoatFrameBlockRegistryObject.get());
+                    .addOptional(getResourceLocation(firmacivAngledWoodenBoatFrameBlockRegistryObject.get()));
         });
 
         FirmaCivPlusBlocks.getWoodRoofings().forEach((registryWood, squaredAngleBlockRegistryObject) ->
         {
             tag(TagKey.create(Registries.BLOCK, new ResourceLocation("alekiroofs", "roofing")))
-                    .add(squaredAngleBlockRegistryObject.get());
+                    .addOptional(getResourceLocation(squaredAngleBlockRegistryObject.get()));
             tag(BlockTags.MINEABLE_WITH_AXE)
-                    .add(squaredAngleBlockRegistryObject.get());
+                    .addOptional(getResourceLocation(squaredAngleBlockRegistryObject.get()));
         });
+    }
+
+    private ResourceLocation getResourceLocation(Block block)
+    {
+        return ForgeRegistries.BLOCKS.getKey(block);
     }
 }
