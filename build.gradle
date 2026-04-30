@@ -188,8 +188,15 @@ dependencies {
     //EMI
     implementation fg.deobf("dev.emi:emi-forge:1.1.13+1.20.1")
 
+    //Every Compat Wood Good
+    implementation fg.deobf("curse.maven:every-compat-628539:7929077")
     //Moonlight Lib
     implementation fg.deobf("curse.maven:selene-499980:7945711")
+
+    //Regions Unexplored
+    implementation fg.deobf("curse.maven:regions-unexplored-659110:5558225")
+    //Terrablender
+    implementation fg.deobf("curse.maven:terrablender-563928:6290448")
 
     // TFC
     implementation fg.deobf("maven.modrinth:patchouli:1.20.1-84-forge")

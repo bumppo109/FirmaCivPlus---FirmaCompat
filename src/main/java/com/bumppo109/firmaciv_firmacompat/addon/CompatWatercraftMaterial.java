@@ -44,8 +44,6 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     {
         if (railingItem != null) return railingItem;
 
-        String woodNamespace = "firma_compat";
-
         String woodName = this.getSerializedName();
 
         // Common locations for lumber in TFC ecosystem
@@ -67,6 +65,12 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
         // Final fallback
         railingItem = Items.AIR;
         return Items.AIR;
+    }
+
+    @Override
+    public String getNamespace()
+    {
+        return woodNamespace;
     }
 
     @Override
@@ -150,6 +154,9 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     {
         return isSoftwood;
     }
+
+    // ============= Add References
+    final String woodNamespace = "firma_compat";
 
     public Block planks() {
         return switch (this) {  // 'this' is the current enum instance

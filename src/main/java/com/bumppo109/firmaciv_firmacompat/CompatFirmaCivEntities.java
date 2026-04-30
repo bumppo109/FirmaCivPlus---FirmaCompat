@@ -68,7 +68,7 @@ public class CompatFirmaCivEntities
 
     private static void putCanoeEntity(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "dugout_canoe/" + compatWatercraftMaterial.getSerializedName();
+        String name = "dugout_canoe/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         var builder = EntityType.Builder.of((EntityType<CanoeEntity> entityType, Level level) ->
         {
             return new CanoeEntity(entityType, level, compatWatercraftMaterial);
@@ -81,7 +81,7 @@ public class CompatFirmaCivEntities
 
     private static void putRowboatEntity(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "rowboat/" + compatWatercraftMaterial.getSerializedName();
+        String name = "rowboat/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         var builder = EntityType.Builder.of((EntityType<FirmacivRowboatEntity> entityType, Level level) ->
         {
             return new FirmacivRowboatEntity(entityType, level, compatWatercraftMaterial);
@@ -93,7 +93,7 @@ public class CompatFirmaCivEntities
 
     private static void putSloopUnderConstructionEntity(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "sloop_construction/" + compatWatercraftMaterial.getSerializedName();
+        String name = "sloop_construction/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         var builder = EntityType.Builder.of((EntityType<FirmacivSloopUnderConstructionEntity> entityType, Level level) ->
         {
             return new FirmacivSloopUnderConstructionEntity(entityType, level, compatWatercraftMaterial);
@@ -108,7 +108,7 @@ public class CompatFirmaCivEntities
 
     private static void putSloopEntity(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "sloop/" + compatWatercraftMaterial.getSerializedName();
+        String name = "sloop/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         var builder = EntityType.Builder.of((EntityType<FirmacivSloopEntity> entityType, Level level) ->
         {
             return new FirmacivSloopEntity(entityType, level, compatWatercraftMaterial);

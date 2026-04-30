@@ -18,6 +18,7 @@ public interface ModWatercraftMaterial extends BoatMaterial, CanoeMaterial
     //ModRegistryWood getWood();
 
     boolean isSoftwood();
+    String getNamespace();
 
     Block getPlanks();
     Block getStrippedLogBlock();
