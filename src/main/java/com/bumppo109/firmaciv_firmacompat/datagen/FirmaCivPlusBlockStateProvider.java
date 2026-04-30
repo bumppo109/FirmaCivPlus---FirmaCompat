@@ -77,8 +77,8 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                         }
 
                         //Model Creation
-                        var strippedLogSideTexture = new ResourceLocation(namespace, String.format(Locale.ROOT, "block/wood/stripped_log/%s", wood.getSerializedName()));
-                        var strippedLogTopTexture = new ResourceLocation(namespace, String.format(Locale.ROOT, "block/wood/stripped_log_top/%s", wood.getSerializedName()));
+                        var strippedLogSideTexture = wood.getStrippedLogTexture();
+                        var strippedLogTopTexture = wood.getStrippedLogTopTexture();
                         String modelName = String.format(Locale.ROOT, "block/wood/canoe_component_block/%s/%s/%s", wood.getSerializedName(), section, step);
                         String parentName = String.format(Locale.ROOT, "block/canoe_component_block/template/%s/%s",
                                 section, step);
@@ -106,8 +106,8 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
     private BiConsumer<ModWatercraftMaterial, Supplier<? extends SquaredAngleBlock>> woodRoofing(FirmaCivPlusBlockStateProvider stateProvider) {
         return (watercraftMaterial, registryObject) ->
         {
-            var registryWood = watercraftMaterial.getWoodType();
-            String namespace = stateProvider.blockTexture(registryWood.planks()).getNamespace();
+            var registryWood = watercraftMaterial;
+            String namespace = stateProvider.blockTexture(registryWood.getPlanks()).getNamespace();
             var variantBlockStateBuilder = stateProvider.getVariantBuilder(registryObject.get());
 
             SquaredAngleBlock.FACING.getPossibleValues().forEach(facing ->

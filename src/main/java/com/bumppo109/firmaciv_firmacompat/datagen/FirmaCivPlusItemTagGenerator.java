@@ -2,7 +2,6 @@ package com.bumppo109.firmaciv_firmacompat.datagen;
 
 import com.alekiponi.alekiships.util.AlekiShipsTags;
 import com.alekiponi.firmaciv.util.FirmacivTags;
-import com.bumppo109.firma_compat.block.ModBlocks;
 import com.bumppo109.firmaciv_firmacompat.FirmaCivFirmaCompat;
 import com.bumppo109.firmaciv_firmacompat.CompatFirmaCivBlocks;
 import com.bumppo109.firmaciv_firmacompat.ModWatercraftMaterial;
@@ -40,7 +39,7 @@ public class FirmaCivPlusItemTagGenerator extends ItemTagsProvider
             tag(AlekiShipsTags.Items.CRAFTING_TABLES)
                     .addOptional(getResourceLocation(Blocks.CRAFTING_TABLE.asItem()));
             tag(FirmacivTags.Items.CHESTS)
-                    .addOptional(getResourceLocation(ModBlocks.COMPAT_CHEST.get().asItem()));
+                    .addOptional(getResourceLocation(Blocks.CHEST.asItem()));
         });
     }
 

@@ -188,6 +188,9 @@ dependencies {
     //EMI
     implementation fg.deobf("dev.emi:emi-forge:1.1.13+1.20.1")
 
+    //Moonlight Lib
+    implementation fg.deobf("curse.maven:selene-499980:7945711")
+
     // TFC
     implementation fg.deobf("maven.modrinth:patchouli:1.20.1-84-forge")
     implementation fg.deobf("maven.modrinth:terrafirmacraft:3.2.12")
@@ -206,7 +209,6 @@ dependencies {
         jarJar.ranged(it as Dependency, "[1.0,)")
     }
 
-
     // ArborFirmaCraft
     implementation fg.deobf("maven.modrinth:arborfirmacraft-(afc):1.0.13-1.20.1")
 
@@ -214,10 +216,6 @@ dependencies {
     implementation fg.deobf("maven.modrinth:jade:11.7.1")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-
-    //FirmaCompat
-    implementation fg.deobf("curse.maven:firma-compat-1475529:8012516")
-
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.6")) {

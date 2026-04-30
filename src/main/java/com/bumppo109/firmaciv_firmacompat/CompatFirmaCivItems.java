@@ -7,10 +7,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 public final class CompatFirmaCivItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, FirmaCivFirmaCompat.MOD_ID);
 
     public static void init(IEventBus bus) {
+        LOGGER.info("FirmaCiv FirmaCompat adding Items");
         ITEMS.register(bus);
 
         bus.addListener(CompatFirmaCivItems::BuildCreativeModeTabContentsEvent);

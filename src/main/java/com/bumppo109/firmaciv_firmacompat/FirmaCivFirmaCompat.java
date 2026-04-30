@@ -26,12 +26,6 @@ public class FirmaCivFirmaCompat
 
         ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
 
-        if(ModList.get().isLoaded("testing"))
-        {
-            LOGGER.info("Enabling FirmaCiv & ArborFirmaCraft cross compat");
-
-        }
-
         CompatFirmaCivBlocks.init(bus);
         CompatFirmaCivItems.init(bus);
         CompatFirmaCivBlockEntities.init(bus);

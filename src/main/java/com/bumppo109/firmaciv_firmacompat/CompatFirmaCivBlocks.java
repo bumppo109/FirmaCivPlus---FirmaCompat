@@ -17,6 +17,8 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.*;
 import java.util.function.Supplier;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 public class CompatFirmaCivBlocks
 {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, FirmaCivFirmaCompat.MOD_ID);
@@ -48,9 +50,10 @@ public class CompatFirmaCivBlocks
 
     static void init(IEventBus eventBus)
     {
+        LOGGER.info("FirmaCiv FirmaCompat adding Blocks");
         for(var woodEntry : ModWatercraftMaterial._ALL_WATERCRAFT_MATERIALS)
         {
-            putWoodRoofing(woodEntry);
+            //putWoodRoofing(woodEntry);
             if(woodEntry.isSoftwood())
             {
                 putCanoeComponentBlock(woodEntry);
@@ -66,12 +69,13 @@ public class CompatFirmaCivBlocks
             BLOCKS.register(eventBus);
     }
 
+    /*
     private static void putWoodRoofing(ModWatercraftMaterial compatWatercraftMaterial)
     {
         String name = "wood/" + compatWatercraftMaterial.getSerializedName() + "_roofing";
         Supplier<SquaredAngleBlock> supplier = () ->
         {
-            var stairs = compatWatercraftMaterial.getWoodType().stair();
+            var stairs = compatWatercraftMaterial.stair();
             var blockState = stairs.defaultBlockState();
             var blockProperties = BlockBehaviour.Properties.copy(stairs)
                     .mapColor(compatWatercraftMaterial.getWood().woodColor()).noOcclusion();
@@ -83,16 +87,17 @@ public class CompatFirmaCivBlocks
         CompatFirmaCivItems.ITEMS.register(name, () -> new BlockItem(entry.get(), new Item.Properties()));
     }
 
+     */
+
     private static void putCanoeComponentBlock(ModWatercraftMaterial compatWatercraftMaterial)
     {
         String name = "wood/canoe_component_block/" + compatWatercraftMaterial.getSerializedName();
         Supplier<CanoeComponentBlock> supplier = () ->
         {
-            var wood = compatWatercraftMaterial.getWoodType();
-            var strippedLog = wood.strippedLog();
+            var wood = compatWatercraftMaterial.getStrippedLogBlock();
+            var strippedLog = wood;
 
-            BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(strippedLog).mapColor(wood.woodColor())
-                    .noOcclusion();
+            BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(strippedLog).noOcclusion();
             return new CanoeComponentBlock(properties, compatWatercraftMaterial);
         };
 

@@ -15,6 +15,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.*;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 public class CompatFirmaCivEntities
 {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, FirmaCivFirmaCompat.MOD_ID);
@@ -45,6 +47,7 @@ public class CompatFirmaCivEntities
 
     static void init(IEventBus eventBus)
     {
+        LOGGER.info("FirmaCiv FirmaCompat adding Entities");
         for(var woodEntry : ModWatercraftMaterial._ALL_WATERCRAFT_MATERIALS)
         {
             if(woodEntry.isSoftwood())

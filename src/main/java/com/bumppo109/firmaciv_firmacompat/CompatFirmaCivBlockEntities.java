@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 public class CompatFirmaCivBlockEntities
 {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, FirmaCivFirmaCompat.MOD_ID);
@@ -23,6 +25,7 @@ public class CompatFirmaCivBlockEntities
 
     static void registerCanoesToFirmaCivRegistry()
     {
+        LOGGER.info("FirmaCiv FirmaCompat registered canoes");
         var registry = FirmacivBlockEntities.CANOE_COMPONENT_BLOCK_ENTITY;
         var blockEntityType = registry.get();
         var hashSet = new HashSet<Block>();
@@ -33,6 +36,7 @@ public class CompatFirmaCivBlockEntities
 
     static void init(IEventBus bus)
     {
+        LOGGER.info("FirmaCiv FirmaCompat adding Block Entities");
         BLOCK_ENTITIES.register(bus);
     }
 

@@ -10,10 +10,13 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 public final class CompatFirmaCivRenderEventHandler
 {
     static void init(IEventBus evtBus)
     {
+        LOGGER.info("FirmaCiv FirmaCompat adding adding renderers");
         evtBus.addListener(CompatFirmaCivRenderEventHandler::registerRenderers);
     }
 
