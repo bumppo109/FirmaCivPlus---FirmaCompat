@@ -164,7 +164,6 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
@@ -215,6 +214,10 @@ dependencies {
     implementation fg.deobf("maven.modrinth:jade:11.7.1")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    //FirmaCompat
+    implementation fg.deobf("curse.maven:firma-compat-1475529:8012516")
+
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.6")) {
