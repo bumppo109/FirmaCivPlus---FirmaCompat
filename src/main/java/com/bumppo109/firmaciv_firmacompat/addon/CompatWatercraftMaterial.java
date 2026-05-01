@@ -92,12 +92,6 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     }
 
     @Override
-    public Block getStairs()
-    {
-        return stair();
-    }
-
-    @Override
     public ResourceLocation getPlanksTexture()
     {
         return planksTexture();

@@ -24,7 +24,7 @@ public class FirmaCivFirmaCompat {
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
+        //ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
         ModWatercraftMaterial.addMaterials(RUWatercraftMaterial.values());
 
         CompatFirmaCivBlocks.init(bus);

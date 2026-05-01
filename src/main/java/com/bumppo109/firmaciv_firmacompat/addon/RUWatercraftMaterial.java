@@ -91,19 +91,13 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
     @Override
     public Block getPlanks()
     {
-        return planks();
+        return this.planks();
     }
 
     @Override
     public Block getStrippedLogBlock()
     {
-        return strippedLog();
-    }
-
-    @Override
-    public Block getStairs()
-    {
-        return stair();
+        return this.strippedLog();
     }
 
     @Override
@@ -165,11 +159,13 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
     }
 
     // ============= Add References
-    final String woodNamespace = "regions_unexplored";
+    final String woodNamespace = "firmaciv_firmacompat";
+
+    final String testNamespace = "regions_unexplored";
 
     public Block planks() {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                new ResourceLocation(woodNamespace, this.getSerializedName() + "_planks")
+                new ResourceLocation(testNamespace, this.getSerializedName() + "_planks")
         );
 
         return block != null ? block : Blocks.AIR;
@@ -178,19 +174,118 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
     public Block strippedLog() {
         Block block;
         if(this.equals(BLUE_BIOSHROOM) || this.equals(YELLOW_BIOSHROOM) || this.equals(GREEN_BIOSHROOM) || this.equals(PINK_BIOSHROOM)){
-            block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(woodNamespace, "stripped_" + this.getSerializedName() + "_hyphae"));
+            block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(testNamespace, "stripped_" + this.getSerializedName() + "_hyphae"));
         } else {
-            block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(woodNamespace, "stripped_" + this.getSerializedName() + "_log"));
+            block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(testNamespace, "stripped_" + this.getSerializedName() + "_log"));
         }
         return block != null ? block : Blocks.AIR;
     }
 
-    public Block stair() {
-        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(woodNamespace, this.getSerializedName() + "_stairs"));
-
-        return block != null ? block : Blocks.AIR;
+    public ResourceLocation woodRes() {
+        return switch (this) {
+            case CYPRESS -> new ResourceLocation(woodNamespace, "cypress");
+            case LARCH -> new ResourceLocation(woodNamespace, "larch");
+            case PINE -> new ResourceLocation(woodNamespace, "pine");
+            case REDWOOD -> new ResourceLocation(woodNamespace, "redwood");
+            case SOCOTRA -> new ResourceLocation(woodNamespace, "socotra");
+            case JOSHUA -> new ResourceLocation(woodNamespace, "joshua");
+            case BAOBAB -> new ResourceLocation(woodNamespace, "baobab");
+            case MAGNOLIA -> new ResourceLocation(woodNamespace, "magnolia");
+            case BLACKWOOD -> new ResourceLocation(woodNamespace, "blackwood");
+            case EUCALYPTUS -> new ResourceLocation(woodNamespace, "eucalyptus");
+            case KAPOK -> new ResourceLocation(woodNamespace, "kapok");
+            case MAPLE -> new ResourceLocation(woodNamespace, "maple");
+            case MAUVE -> new ResourceLocation(woodNamespace, "mauve");
+            case PALM -> new ResourceLocation(woodNamespace, "palm");
+            case WILLOW -> new ResourceLocation(woodNamespace, "willow");
+            case BLUE_BIOSHROOM -> new ResourceLocation(woodNamespace, "blue_bioshroom");
+            case YELLOW_BIOSHROOM -> new ResourceLocation(woodNamespace, "yellow_bioshroom");
+            case GREEN_BIOSHROOM -> new ResourceLocation(woodNamespace, "green_bioshroom");
+            case PINK_BIOSHROOM -> new ResourceLocation(woodNamespace, "pink_bioshroom");
+            case COBALT -> new ResourceLocation(woodNamespace, "cobalt");
+            case BRIMWOOD -> new ResourceLocation(woodNamespace, "brimwood");
+        };
     }
 
+    public ResourceLocation planksTexture() {
+        return switch (this) {
+            case CYPRESS -> new ResourceLocation(woodNamespace, "cypress_planks");
+            case LARCH -> new ResourceLocation(woodNamespace, "larch_planks");
+            case PINE -> new ResourceLocation(woodNamespace, "pine_planks");
+            case REDWOOD -> new ResourceLocation(woodNamespace, "redwood_planks");
+            case SOCOTRA -> new ResourceLocation(woodNamespace, "socotra_planks");
+            case JOSHUA -> new ResourceLocation(woodNamespace, "joshua_planks");
+            case BAOBAB -> new ResourceLocation(woodNamespace, "baobab_planks");
+            case MAGNOLIA -> new ResourceLocation(woodNamespace, "magnolia_planks");
+            case BLACKWOOD -> new ResourceLocation(woodNamespace, "blackwood_planks");
+            case EUCALYPTUS -> new ResourceLocation(woodNamespace, "eucalyptus_planks");
+            case KAPOK -> new ResourceLocation(woodNamespace, "kapok_planks");
+            case MAPLE -> new ResourceLocation(woodNamespace, "maple_planks");
+            case MAUVE -> new ResourceLocation(woodNamespace, "mauve_planks");
+            case PALM -> new ResourceLocation(woodNamespace, "palm_planks");
+            case WILLOW -> new ResourceLocation(woodNamespace, "willow_planks");
+            case BLUE_BIOSHROOM -> new ResourceLocation(woodNamespace, "blue_bioshroom_planks");
+            case YELLOW_BIOSHROOM -> new ResourceLocation(woodNamespace, "yellow_bioshroom_planks");
+            case GREEN_BIOSHROOM -> new ResourceLocation(woodNamespace, "green_bioshroom_planks");
+            case PINK_BIOSHROOM -> new ResourceLocation(woodNamespace, "pink_bioshroom_planks");
+            case COBALT -> new ResourceLocation(woodNamespace, "cobalt_planks");
+            case BRIMWOOD -> new ResourceLocation(woodNamespace, "brimwood_planks");
+        };
+    }
+
+    public ResourceLocation strippedLogTexture() {
+        return switch (this) {
+            case CYPRESS -> new ResourceLocation(woodNamespace, "stripped_cypress_log");
+            case LARCH -> new ResourceLocation(woodNamespace, "stripped_larch_log");
+            case PINE -> new ResourceLocation(woodNamespace, "stripped_pine_log");
+            case REDWOOD -> new ResourceLocation(woodNamespace, "stripped_redwood_log");
+            case SOCOTRA -> new ResourceLocation(woodNamespace, "stripped_socotra_log");
+            case JOSHUA -> new ResourceLocation(woodNamespace, "stripped_joshua_log");
+            case BAOBAB -> new ResourceLocation(woodNamespace, "stripped_baobab_log");
+            case MAGNOLIA -> new ResourceLocation(woodNamespace, "stripped_magnolia_log");
+            case BLACKWOOD -> new ResourceLocation(woodNamespace, "stripped_blackwood_log");
+            case EUCALYPTUS -> new ResourceLocation(woodNamespace, "stripped_eucalyptus_log");
+            case KAPOK -> new ResourceLocation(woodNamespace, "stripped_kapok_log");
+            case MAPLE -> new ResourceLocation(woodNamespace, "stripped_maple_log");
+            case MAUVE -> new ResourceLocation(woodNamespace, "stripped_mauve_log");
+            case PALM -> new ResourceLocation(woodNamespace, "stripped_palm_log");
+            case WILLOW -> new ResourceLocation(woodNamespace, "stripped_willow_log");
+            case BLUE_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_blue_bioshroom_hyphae");
+            case YELLOW_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_yellow_bioshroom_hyphae");
+            case GREEN_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_green_bioshroom_hyphae");
+            case PINK_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_pink_bioshroom_hyphae");
+            case COBALT -> new ResourceLocation(woodNamespace, "stripped_cobalt_log");
+            case BRIMWOOD -> new ResourceLocation(woodNamespace, "stripped_brimwood_log");
+        };
+    }
+
+    public ResourceLocation strippedLogTopTexture() {
+        return switch (this) {
+            case CYPRESS -> new ResourceLocation(woodNamespace, "stripped_cypress_log_top");
+            case LARCH -> new ResourceLocation(woodNamespace, "stripped_larch_log_top");
+            case PINE -> new ResourceLocation(woodNamespace, "stripped_pine_log_top");
+            case REDWOOD -> new ResourceLocation(woodNamespace, "stripped_redwood_log_top");
+            case SOCOTRA -> new ResourceLocation(woodNamespace, "stripped_socotra_log_top");
+            case JOSHUA -> new ResourceLocation(woodNamespace, "stripped_joshua_log_top");
+            case BAOBAB -> new ResourceLocation(woodNamespace, "stripped_baobab_log_top");
+            case MAGNOLIA -> new ResourceLocation(woodNamespace, "stripped_magnolia_log_top");
+            case BLACKWOOD -> new ResourceLocation(woodNamespace, "stripped_blackwood_log_top");
+            case EUCALYPTUS -> new ResourceLocation(woodNamespace, "stripped_eucalyptus_log_top");
+            case KAPOK -> new ResourceLocation(woodNamespace, "stripped_kapok_log_top");
+            case MAPLE -> new ResourceLocation(woodNamespace, "stripped_maple_log_top");
+            case MAUVE -> new ResourceLocation(woodNamespace, "stripped_mauve_log_top");
+            case PALM -> new ResourceLocation(woodNamespace, "stripped_palm_log_top");
+            case WILLOW -> new ResourceLocation(woodNamespace, "stripped_willow_log_top");
+            case BLUE_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_blue_bioshroom_hyphae_top");
+            case YELLOW_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_yellow_bioshroom_hyphae_top");
+            case GREEN_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_green_bioshroom_hyphae_top");
+            case PINK_BIOSHROOM -> new ResourceLocation(woodNamespace, "stripped_pink_bioshroom_hyphae_top");
+            case COBALT -> new ResourceLocation(woodNamespace, "stripped_cobalt_log_top");
+            case BRIMWOOD -> new ResourceLocation(woodNamespace, "stripped_brimwood_log_top");
+        };
+    }
+
+    /*
     public ResourceLocation planksTexture() {
         ResourceLocation block = ForgeRegistries.BLOCKS.getKey(this.getPlanks());
 
@@ -221,4 +316,6 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
 
         return block;
     }
+
+     */
 }

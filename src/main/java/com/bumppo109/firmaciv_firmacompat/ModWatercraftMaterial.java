@@ -22,12 +22,10 @@ public interface ModWatercraftMaterial extends BoatMaterial, CanoeMaterial
 
     Block getPlanks();
     Block getStrippedLogBlock();
-    Block getStairs();
 
     ResourceLocation getPlanksTexture();
     ResourceLocation getStrippedLogTexture();
     ResourceLocation getStrippedLogTopTexture();
-
     //CompatWood getWoodType();
 
     HashSet<ModWatercraftMaterial> _ALL_WATERCRAFT_MATERIALS = new HashSet<>();
