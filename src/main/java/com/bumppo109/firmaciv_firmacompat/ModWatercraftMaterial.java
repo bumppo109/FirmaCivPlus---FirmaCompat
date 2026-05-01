@@ -7,9 +7,11 @@ import com.alekiponi.firmaciv.util.CanoeMaterial;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.mojang.text2speech.Narrator.LOGGER;
 
@@ -19,10 +21,6 @@ public interface ModWatercraftMaterial extends BoatMaterial, CanoeMaterial
 
     boolean isSoftwood();
     String getNamespace();
-
-    Block getPlanks();
-    Block getStrippedLogBlock();
-    Block getStairs();
 
     ResourceLocation getPlanksTexture();
     ResourceLocation getStrippedLogTexture();
@@ -46,18 +44,26 @@ public interface ModWatercraftMaterial extends BoatMaterial, CanoeMaterial
             if(material.isSoftwood())
             {
                 CanoeComponentBlock.registerCanoeComponent(
-                        (RotatedPillarBlock) material.getStrippedLogBlock(),
+                        (RotatedPillarBlock) getStrippedLogBlock(material),
                                 CompatFirmaCivBlocks.getCanoeComponentBlocks().get(material).get());
             }
             else
             {
                 FirmacivBlocks.BOAT_FRAME_ANGLED.get()
-                        .registerFrame(material.getPlanks().asItem(),
+                        .registerFrame(getPlanksBlock(material).asItem(),
                                 CompatFirmaCivBlocks.getWoodenBoatFrameAngledBlocks().get(material).get());
                 FirmacivBlocks.BOAT_FRAME_FLAT.get()
-                        .registerFrame(material.getPlanks().asItem(),
+                        .registerFrame(getPlanksBlock(material).asItem(),
                                 CompatFirmaCivBlocks.getWoodenBoatFrameFlatBlocks().get(material).get());
             }
         }
     }
+
+    private static RotatedPillarBlock getStrippedLogBlock(ModWatercraftMaterial material) {
+        return (RotatedPillarBlock) ForgeRegistries.BLOCKS.getValue(material.getStrippedLogTexture());
+    }
+    private static Block getPlanksBlock(ModWatercraftMaterial material) {
+        return ForgeRegistries.BLOCKS.getValue(material.getPlanksTexture());
+    }
+
 }

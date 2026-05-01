@@ -1,6 +1,8 @@
 package com.bumppo109.firmaciv_firmacompat.moonlight;
 
 import com.bumppo109.firmaciv_firmacompat.FirmaCivFirmaCompat;
+import net.dries007.tfc.common.blocks.ExtendedProperties;
+import net.dries007.tfc.common.blocks.wood.TFCFenceBlock;
 import net.mehvahdjukaar.every_compat.api.*;
 import net.mehvahdjukaar.every_compat.modules.EveryCompatModule;
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
@@ -9,7 +11,10 @@ import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Consumer;
 
@@ -34,6 +39,7 @@ public final class WoodGoodModule extends EveryCompatModule {
                 .excludeBlockTypes("afc:.*")
                 .build();
         this.addEntry(LUMBER);
+
     }
 
     @Override

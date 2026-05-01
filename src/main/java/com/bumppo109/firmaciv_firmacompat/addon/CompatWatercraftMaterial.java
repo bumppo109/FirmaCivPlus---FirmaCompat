@@ -14,7 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public enum CompatWatercraftMaterial implements ModWatercraftMaterial
 {
@@ -29,8 +31,8 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     MANGROVE(false),
     OAK(false),
 
-    CRIMSON(true),
-    WARPED(true),
+    CRIMSON(false),
+    WARPED(false),
     ;
 
     public final boolean isSoftwood;
@@ -76,25 +78,7 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public Item getStrippedLog()
     {
-        return this.strippedLog().asItem();
-    }
-
-    @Override
-    public Block getPlanks()
-    {
-        return planks();        // keep your internal method or inline it
-    }
-
-    @Override
-    public Block getStrippedLogBlock()
-    {
-        return strippedLog();
-    }
-
-    @Override
-    public Block getStairs()
-    {
-        return stair();
+        return Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(getPlanksTexture())).asItem();
     }
 
     @Override
@@ -124,7 +108,7 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public BlockState getDeckBlock()
     {
-        return this.planks().defaultBlockState();
+        return Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(getPlanksTexture())).defaultBlockState();
     }
 
     @Override
@@ -158,54 +142,6 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     // ============= Add References
     final String woodNamespace = "firma_compat";
 
-    public Block planks() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> Blocks.ACACIA_PLANKS;
-            case BIRCH    -> Blocks.BIRCH_PLANKS;
-            case CHERRY   -> Blocks.CHERRY_PLANKS;
-            case DARK_OAK -> Blocks.DARK_OAK_PLANKS;
-            case JUNGLE   -> Blocks.JUNGLE_PLANKS;
-            case MANGROVE -> Blocks.MANGROVE_PLANKS;
-            case OAK      -> Blocks.OAK_PLANKS;
-            case SPRUCE   -> Blocks.SPRUCE_PLANKS;
-            case CRIMSON  -> Blocks.CRIMSON_PLANKS;
-            case WARPED   -> Blocks.WARPED_PLANKS;
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
-    public Block strippedLog() {
-        return switch (this) {
-            case ACACIA   -> Blocks.STRIPPED_ACACIA_LOG;
-            case BIRCH    -> Blocks.STRIPPED_BIRCH_LOG;
-            case CHERRY   -> Blocks.STRIPPED_CHERRY_LOG;
-            case DARK_OAK -> Blocks.STRIPPED_DARK_OAK_LOG;
-            case JUNGLE   -> Blocks.STRIPPED_JUNGLE_LOG;
-            case MANGROVE -> Blocks.STRIPPED_MANGROVE_LOG;
-            case OAK      -> Blocks.STRIPPED_OAK_LOG;
-            case SPRUCE   -> Blocks.STRIPPED_SPRUCE_LOG;
-            case CRIMSON  -> Blocks.STRIPPED_CRIMSON_STEM;   // Note: stems for fungi
-            case WARPED   -> Blocks.STRIPPED_WARPED_STEM;
-            // No default needed
-        };
-    }
-
-    public Block stair() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> Blocks.ACACIA_STAIRS;
-            case BIRCH    -> Blocks.BIRCH_STAIRS;
-            case CHERRY   -> Blocks.CHERRY_STAIRS;
-            case DARK_OAK -> Blocks.DARK_OAK_STAIRS;
-            case JUNGLE   -> Blocks.JUNGLE_STAIRS;
-            case MANGROVE -> Blocks.MANGROVE_STAIRS;
-            case OAK      -> Blocks.OAK_STAIRS;
-            case SPRUCE   -> Blocks.SPRUCE_STAIRS;
-            case CRIMSON  -> Blocks.CRIMSON_STAIRS;
-            case WARPED   -> Blocks.WARPED_STAIRS;
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
     public ResourceLocation planksTexture() {
         return switch (this) {  // 'this' is the current enum instance
             case ACACIA   -> new ResourceLocation("minecraft", "block/acacia_planks");
@@ -218,22 +154,6 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
             case SPRUCE   -> new ResourceLocation("minecraft", "block/spruce_planks");
             case CRIMSON  -> new ResourceLocation("minecraft", "block/crimson_planks");
             case WARPED   -> new ResourceLocation("minecraft", "block/warped_planks");
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
-    public ResourceLocation logSideTexture() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> new ResourceLocation("minecraft", "block/acacia_log");
-            case BIRCH    -> new ResourceLocation("minecraft", "block/birch_log");
-            case CHERRY   -> new ResourceLocation("minecraft", "block/cherry_log");
-            case DARK_OAK -> new ResourceLocation("minecraft", "block/dark_oak_log");
-            case JUNGLE   -> new ResourceLocation("minecraft", "block/jungle_log");
-            case MANGROVE -> new ResourceLocation("minecraft", "block/mangrove_log");
-            case OAK      -> new ResourceLocation("minecraft", "block/oak_log");
-            case SPRUCE   -> new ResourceLocation("minecraft", "block/spruce_log");
-            case CRIMSON  -> new ResourceLocation("minecraft", "block/crimson_stem");
-            case WARPED   -> new ResourceLocation("minecraft", "block/warped_stem");
             // No default needed — enum switch is exhaustive
         };
     }

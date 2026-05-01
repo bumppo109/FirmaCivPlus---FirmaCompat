@@ -27,9 +27,10 @@ public class FirmaCivPlusRecipeProvider extends RecipeProvider
         var sawTag = TagKey.create(Registries.ITEM, new ResourceLocation("tfc", "saws"));
         CompatFirmaCivBlocks.getWoodRoofings().forEach((watercraftMaterial, squaredAngleBlockRegistryObject) ->
         {
-            var planks = watercraftMaterial.getPlanks();
+            var planks = ForgeRegistries.BLOCKS.getValue(watercraftMaterial.getPlanksTexture());
 
             //crafting roofing
+            assert planks != null;
             AdvancedCraftingRecipeBuilder.shaped("crafting", squaredAngleBlockRegistryObject.get(), 6, CraftingBookCategory.BUILDING)
                     .pattern("  a")
                     .pattern(" a ")

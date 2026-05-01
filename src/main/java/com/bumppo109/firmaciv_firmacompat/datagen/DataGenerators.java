@@ -12,23 +12,35 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(modid = FirmaCivFirmaCompat.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public final class DataGenerators
-{
+public final class DataGenerators {
+
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent evt)
-    {
+    public static void gatherData(GatherDataEvent evt) {
         DataGenerator generator = evt.getGenerator();
-        PackOutput packOutput = generator.getPackOutput();
+        PackOutput output = generator.getPackOutput();
         ExistingFileHelper helper = evt.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> lookup = evt.getLookupProvider();
 
-        generator.addProvider(evt.includeClient(), new FirmaCivPlusBlockStateProvider(packOutput, helper));
-        generator.addProvider(evt.includeClient(), new FirmaCivPlus_en_us_LanguageProvider(packOutput));
+        if (evt.includeClient()) {
+            generator.addProvider(true, new FirmaCivPlusBlockStateProvider(output, helper));
+            generator.addProvider(true, new FirmaCivPlus_en_us_LanguageProvider(output));
+        }
 
-        var blockTagGenerator = generator.addProvider(evt.includeServer(), new FirmaCivPlusBlockTagGenerator(packOutput, evt.getLookupProvider(), helper));
-        generator.addProvider(evt.includeServer(), new FirmaCivPlusItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter(), helper));
-        generator.addProvider(evt.includeServer(), new FirmaCivPlusEntityTypeTagsGenerator(packOutput, lookupProvider, helper));
-        generator.addProvider(evt.includeServer(), FirmaCivPlusLootTableProvider.create(packOutput));
-        generator.addProvider(evt.includeServer(), new FirmaCivPlusRecipeProvider(packOutput));
+        if (evt.includeServer()) {
+            var blockTags = generator.addProvider(true,
+                    new FirmaCivPlusBlockTagGenerator(output, lookup, helper));
+
+            generator.addProvider(true,
+                    new FirmaCivPlusItemTagGenerator(output, lookup, blockTags.contentsGetter(), helper));
+
+            generator.addProvider(true,
+                    new FirmaCivPlusEntityTypeTagsGenerator(output, lookup, helper));
+
+            generator.addProvider(true,
+                    FirmaCivPlusLootTableProvider.create(output));
+
+            generator.addProvider(true,
+                    new FirmaCivPlusRecipeProvider(output));
+        }
     }
 }

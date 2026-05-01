@@ -24,8 +24,14 @@ public class FirmaCivFirmaCompat {
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
+        //ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
         ModWatercraftMaterial.addMaterials(RUWatercraftMaterial.values());
+
+        if(ModList.get().isLoaded("regions_unexplored")){
+            LOGGER.info("Enabling FirmaCiv & Regions Unexplored Compat");
+
+        }
+
 
         CompatFirmaCivBlocks.init(bus);
         CompatFirmaCivItems.init(bus);
