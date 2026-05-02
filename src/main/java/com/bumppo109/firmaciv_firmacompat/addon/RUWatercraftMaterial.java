@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.regions_unexplored.block.RuBlocks;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -175,6 +176,36 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
         return block != null ? block : Blocks.AIR;
     }
 
+    /*
+    public Block strippedLog() {
+        return switch (this) {  // 'this' is the current enum instance
+            case CYPRESS   -> RuBlocks.STRIPPED_CYPRESS_LOG.get();
+            case LARCH-> RuBlocks.STRIPPED_LARCH_LOG.get();
+            case PINE-> RuBlocks.STRIPPED_PINE_LOG.get();
+            case SOCOTRA-> RuBlocks.STRIPPED_SOCOTRA_LOG.get();
+            case JOSHUA-> RuBlocks.STRIPPED_JOSHUA_LOG.get();
+
+            case REDWOOD-> RuBlocks.STRIPPED_REDWOOD_LOG.get();
+            case BAOBAB-> RuBlocks.STRIPPED_BAOBAB_LOG.get();
+            case BLACKWOOD-> RuBlocks.STRIPPED_BLACKWOOD_LOG.get();
+            case EUCALYPTUS-> RuBlocks.STRIPPED_EUCALYPTUS_LOG.get();
+            case KAPOK-> RuBlocks.STRIPPED_KAPOK_LOG.get();
+            case MAGNOLIA-> RuBlocks.STRIPPED_MAGNOLIA_LOG.get();
+            case MAPLE-> RuBlocks.STRIPPED_MAPLE_LOG.get();
+            case MAUVE-> RuBlocks.STRIPPED_MAUVE_LOG.get();
+            case PALM-> RuBlocks.STRIPPED_PALM_LOG.get();
+            case WILLOW-> RuBlocks.STRIPPED_WILLOW_LOG.get();
+            case BRIMWOOD-> RuBlocks.STRIPPED_BRIMWOOD_LOG.get();
+            case COBALT-> RuBlocks.STRIPPED_COBALT_LOG.get();
+
+            case GREEN_BIOSHROOM -> RuBlocks.STRIPPED_GREEN_BIOSHROOM_HYPHAE.get();
+            case BLUE_BIOSHROOM -> RuBlocks.STRIPPED_BLUE_BIOSHROOM_HYPHAE.get();
+            case PINK_BIOSHROOM -> RuBlocks.STRIPPED_PINK_BIOSHROOM_HYPHAE.get();
+            case YELLOW_BIOSHROOM -> RuBlocks.STRIPPED_YELLOW_BIOSHROOM_HYPHAE.get();
+        };
+    }
+
+     */
     public Block strippedLog() {
         Block block;
         if(this.equals(BLUE_BIOSHROOM) || this.equals(YELLOW_BIOSHROOM) || this.equals(GREEN_BIOSHROOM) || this.equals(PINK_BIOSHROOM)){

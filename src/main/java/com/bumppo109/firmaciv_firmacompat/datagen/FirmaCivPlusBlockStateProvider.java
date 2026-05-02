@@ -79,7 +79,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                         //Model Creation
                         var strippedLogSideTexture = wood.getStrippedLogTexture();
                         var strippedLogTopTexture = wood.getStrippedLogTopTexture();
-                        String modelName = String.format(Locale.ROOT, "block/wood/canoe_component_block/%s/%s/%s", wood.getSerializedName(), section, step);
+                        String modelName = String.format(Locale.ROOT, "block/wood/canoe_component_block/%s/%s/%s/%s", wood.getNamespace(), wood.getSerializedName(), section, step);
                         String parentName = String.format(Locale.ROOT, "block/canoe_component_block/template/%s/%s",
                                 section, step);
                         var modelFile = stateProvider.models()
@@ -132,8 +132,8 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                         case STRAIGHT -> parentModelShape = "";
                     }
 
-                    var planksTexture = new ResourceLocation(namespace, String.format(Locale.ROOT, "block/wood/planks/%s", registryWood.getSerializedName()));
-                    String modelName = "block/wood/" + registryWood.getSerializedName() + "_roofing" + parentModelShape;
+                    var planksTexture = registryWood.getPlanksTexture();
+                    String modelName = "block/" + registryWood.getSerializedName() + "_roofing" + parentModelShape;
                     String parentName = "block/roofing" + parentModelShape;
 
                     var modelFile = stateProvider.models()
@@ -150,7 +150,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                     configuredModel.addModel();
                 });
             });
-            itemModels().withExistingParent("item/wood/" + registryWood.getSerializedName() + "_roofing", modLoc("block/wood/" + registryWood.getSerializedName() + "_roofing"));
+            itemModels().withExistingParent("item/" + registryWood.getSerializedName() + "_roofing", modLoc("block/" + registryWood.getSerializedName() + "_roofing"));
         };
     }
 
@@ -170,7 +170,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                 if(progress < 4)
                 {
                     final var plankModel = blockStateProvider.models().withExistingParent(
-                            String.format(Locale.ROOT, "block/wood/watercraft_frame/flat/%s/%s", wood.getSerializedName(),
+                            String.format(Locale.ROOT, "block/wood/watercraft_frame/flat/%s/%s/%s", wood.getNamespace(), wood.getSerializedName(),
                                     BOAT_FRAME_PROGRESS_STRINGS[progress]), new ResourceLocation(AlekiShips.MOD_ID,
                                     String.format(Locale.ROOT, "block/watercraft_frame/flat/template/%s",
                                             BOAT_FRAME_PROGRESS_STRINGS[progress]))).texture("plank", plankTexture);
@@ -220,7 +220,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                         if(progress < 4)
                         {
                             final var plankModel = blockStateProvider.models().withExistingParent(
-                                            String.format(Locale.ROOT, "block/wood/watercraft_frame/angled/%s/%s/%s",
+                                            String.format(Locale.ROOT, "block/wood/watercraft_frame/angled/%s/%s/%s/%s", wood.getNamespace(),
                                                     wood.getSerializedName(), modelShape, BOAT_FRAME_PROGRESS_STRINGS[progress]),
                                             new ResourceLocation(AlekiShips.MOD_ID,
                                                     String.format(Locale.ROOT, "block/watercraft_frame/angled/template/%s/%s",

@@ -1,0 +1,25 @@
+{
+  "type": "tfc:damage_inputs_shapeless_crafting",
+  "recipe": {
+    "type": "tfc:advanced_shapeless_crafting",
+    "category": "misc",
+    "ingredients": [
+      {
+        "item": "firmaciv_firmacompat:jungle_roofing"
+      },
+      {
+        "tag": "tfc:saws"
+      }
+    ],
+    "primary_ingredient": {
+      "tag": "tfc:saws"
+    },
+    "result": {
+      "modifiers": [],
+      "stack": {
+        "count": 2,
+        "item": "minecraft:air"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "tfc:advanced_shaped_crafting",
+  "category": "building",
+  "input_column": 0,
+  "input_row": 0,
+  "key": {
+    "a": []
+  },
+  "pattern": [
+    "  a",
+    " a ",
+    "a  "
+  ],
+  "result": {
+    "modifiers": [],
+    "stack": {
+      "count": 6,
+      "item": "firmaciv_firmacompat:cherry_roofing"
+    }
+  },
+  "show_notification": true
+}

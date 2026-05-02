@@ -1,5 +1,6 @@
 package com.bumppo109.firmaciv_firmacompat.moonlight;
 
+import com.alekiponi.alekiroofs.SquaredAngleBlock;
 import com.bumppo109.firmaciv_firmacompat.FirmaCivFirmaCompat;
 import net.dries007.tfc.common.blocks.ExtendedProperties;
 import net.dries007.tfc.common.blocks.wood.TFCFenceBlock;
@@ -9,36 +10,38 @@ import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 
+import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
 
 public final class WoodGoodModule extends EveryCompatModule {
-    public final ItemOnlyEntrySet<WoodType, Item> LUMBER;
+    public final SimpleEntrySet<WoodType, Block> ROOFING;
 
     public WoodGoodModule() {
         super(FirmaCivFirmaCompat.MOD_ID, FirmaCivFirmaCompat.MOD_ID, FirmaCivFirmaCompat.MOD_ID);
 
         ResourceKey<CreativeModeTab> tab = CreativeModeTabs.BUILDING_BLOCKS;
 
-        LUMBER = ItemOnlyEntrySet.builder(WoodType.class, "lumber",
-                        getModItem("lumber"), () -> VanillaWoodTypes.OAK,
-                        w -> new Item(new Item.Properties())
+        ROOFING = SimpleEntrySet.builder(WoodType.class, "roofing",
+                        getModBlock("oak_roofing"), () -> VanillaWoodTypes.OAK,
+                        w -> new
+                                SquaredAngleBlock(Blocks.OAK_STAIRS.defaultBlockState(), Utils.copyPropertySafe(w.planks))
                 )
-                .addTexture(modRes("entity/template/watercraft/dugout_canoe"), PaletteStrategies.MAIN_CHILD)
-                .addTexture(modRes("entity/template/watercraft/rowboat"), PaletteStrategies.MAIN_CHILD)
-                .addTexture(modRes("entity/template/watercraft/sloop"), PaletteStrategies.MAIN_CHILD)
-                .addTexture(modRes("entity/template/watercraft/sloop_construction"), PaletteStrategies.MAIN_CHILD)
+                .requiresChildren("planks")
+                .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
+                .defaultRecipe()
+                .dropSelf()
                 .setTabKey(tab)
-                .excludeBlockTypes("tfc:.*")
-                .excludeBlockTypes("afc:.*")
+                .excludeBlockTypes("tfc:.*").excludeBlockTypes("afc:.*").excludeBlockTypes("domum_ornamentum:.*")
                 .build();
-        this.addEntry(LUMBER);
+        this.addEntry(ROOFING);
 
     }
 

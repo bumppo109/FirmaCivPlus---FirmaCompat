@@ -5,6 +5,7 @@ import com.alekiponi.firmaciv.common.block.CanoeComponentBlock;
 import com.alekiponi.firmaciv.common.block.FirmacivAngledWoodenBoatFrameBlock;
 import com.alekiponi.firmaciv.common.block.FirmacivBlocks;
 import com.alekiponi.firmaciv.common.block.FirmacivFlatWoodenBoatFrameBlock;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -72,13 +73,12 @@ public class CompatFirmaCivBlocks
     /*
     private static void putWoodRoofing(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "wood/" + compatWatercraftMaterial.getSerializedName() + "_roofing";
+        String name = compatWatercraftMaterial.getSerializedName() + "_roofing";
         Supplier<SquaredAngleBlock> supplier = () ->
         {
-            var stairs = compatWatercraftMaterial.stair();
-            var blockState = stairs.defaultBlockState();
-            var blockProperties = BlockBehaviour.Properties.copy(stairs)
-                    .mapColor(compatWatercraftMaterial.getWood().woodColor()).noOcclusion();
+            var stairs = new ResourceLocation("minecraft", compatWatercraftMaterial.getSerializedName() + "_stairs");
+            var blockState = Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)).defaultBlockState();
+            var blockProperties = BlockBehaviour.Properties.copy(Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)));
             return new SquaredAngleBlock(blockState, blockProperties);
         };
 

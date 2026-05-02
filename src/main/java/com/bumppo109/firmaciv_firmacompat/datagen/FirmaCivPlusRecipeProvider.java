@@ -29,6 +29,7 @@ public class FirmaCivPlusRecipeProvider extends RecipeProvider
         {
             var planks = ForgeRegistries.BLOCKS.getValue(watercraftMaterial.getPlanksTexture());
 
+            /*
             //crafting roofing
             assert planks != null;
             AdvancedCraftingRecipeBuilder.shaped("crafting", squaredAngleBlockRegistryObject.get(), 6, CraftingBookCategory.BUILDING)
@@ -41,7 +42,6 @@ public class FirmaCivPlusRecipeProvider extends RecipeProvider
                     .save(consumer);
 
             var lumber = watercraftMaterial.getRailing();
-            var lumberRegistry = ForgeRegistries.ITEMS.getKey(lumber);
             //uncrafting roofing
             AdvancedCraftingRecipeBuilder.shapeless("crafting", watercraftMaterial.getRailing(), 2)
                     .requires(squaredAngleBlockRegistryObject.get())
@@ -50,10 +50,12 @@ public class FirmaCivPlusRecipeProvider extends RecipeProvider
                     .damageInputs()
                     .unlockedBy("has_saw", has(sawTag))
                     .unlockedBy("has_roofing", has(squaredAngleBlockRegistryObject.get()))
-                    .save(consumer, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID, "crafting/" + lumberRegistry.getPath()));
+                    .save(consumer, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID, "crafting/" + watercraftMaterial.getSerializedName() + "_lumber_from_" + watercraftMaterial.getSerializedName() + "_roof"));
+
+             */
 
             //kill off the boat
-            var dummy = new DisabledRecipe(new ResourceLocation(lumberRegistry.getNamespace(), "crafting/wood/" + watercraftMaterial.getSerializedName() + "_boat"));
+            var dummy = new DisabledRecipe(new ResourceLocation(watercraftMaterial.getNamespace(), watercraftMaterial.getSerializedName() + "_boat"));
             consumer.accept(dummy);
         });
     }
