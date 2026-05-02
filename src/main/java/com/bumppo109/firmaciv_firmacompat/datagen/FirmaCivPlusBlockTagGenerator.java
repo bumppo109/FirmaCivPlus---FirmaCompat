@@ -4,6 +4,7 @@ import com.alekiponi.alekiships.util.AlekiShipsTags;
 import com.alekiponi.firmaciv.util.FirmacivTags;
 import com.bumppo109.firmaciv_firmacompat.FirmaCivFirmaCompat;
 import com.bumppo109.firmaciv_firmacompat.CompatFirmaCivBlocks;
+import com.bumppo109.firmaciv_firmacompat.ModWatercraftMaterial;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -17,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 public class FirmaCivPlusBlockTagGenerator extends BlockTagsProvider
 {
@@ -34,9 +36,9 @@ public class FirmaCivPlusBlockTagGenerator extends BlockTagsProvider
                     .addOptional(getResourceLocation(canoeComponentBlockRegistryObject.get()));
 
             tag(FirmacivTags.Blocks.CAN_MAKE_CANOE)
-                    .addOptional(getResourceLocation(watercraftMaterial.getStrippedLogBlock()));
+                    .addOptional(getResourceLocation(getStrippedLogBlock(watercraftMaterial)));
             tag(FirmacivTags.Blocks.CAN_MAKE_CANOE_UNRESTRICTED)
-                    .addOptional(getResourceLocation(watercraftMaterial.getStrippedLogBlock()));
+                    .addOptional(getResourceLocation(getStrippedLogBlock(watercraftMaterial)));
         });
 
         CompatFirmaCivBlocks.getWoodenBoatFrameFlatBlocks().forEach((watercraftMaterial, firmacivFlatWoodenBoatFrameBlockRegistryObject) ->
@@ -63,5 +65,9 @@ public class FirmaCivPlusBlockTagGenerator extends BlockTagsProvider
     private ResourceLocation getResourceLocation(Block block)
     {
         return ForgeRegistries.BLOCKS.getKey(block);
+    }
+
+    public static Block getStrippedLogBlock(ModWatercraftMaterial material) {
+        return ForgeRegistries.BLOCKS.getValue(material.getStrippedLogTexture());
     }
 }

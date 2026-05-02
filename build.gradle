@@ -78,28 +78,19 @@ minecraft {
         }
 
         data {
-            // example of overriding the workingDirectory set in configureEach above
             workingDirectory project.file('runs/data')
 
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args (
-                    '--mod',
-                    mod_id,
+                    '--mod', mod_id,
                     '--all',
-                    '--output',
-                    file('src/generated/resources/'),
-                    '--existing',
-                    file('src/main/resources/'),
-                    '--existing-mod',
-                    'alekiships',
-                    '--existing-mod',
-                    'afc',
-                    '--existing-mod',
-                    'beneath',
-                    '--existing-mod',
-                    'firmaciv',
-                    '--existing-mod',
-                    'alekiroofs'
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/'),
+                    '--existing-mod', 'alekiships',
+                    '--existing-mod', 'afc',
+                    '--existing-mod', 'beneath',
+                    '--existing-mod', 'firmaciv',
+                    '--existing-mod', 'alekiroofs',
+                    '--existing-mod', 'regions_unexplored'
             )
         }
     }
@@ -194,7 +185,7 @@ dependencies {
     implementation fg.deobf("curse.maven:selene-499980:7945711")
 
     //Regions Unexplored
-    implementation fg.deobf("curse.maven:regions-unexplored-659110:5558225")
+    minecraftLibrary fg.deobf("curse.maven:regions-unexplored-659110:5558225")
     //Terrablender
     implementation fg.deobf("curse.maven:terrablender-563928:6290448")
 

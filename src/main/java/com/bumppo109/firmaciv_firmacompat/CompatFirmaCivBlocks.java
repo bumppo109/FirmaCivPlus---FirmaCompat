@@ -94,8 +94,8 @@ public class CompatFirmaCivBlocks
         String name = "wood/canoe_component_block/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         Supplier<CanoeComponentBlock> supplier = () ->
         {
-            var wood = compatWatercraftMaterial.getStrippedLogBlock();
-            var strippedLog = wood;
+            Supplier<Block> woodSupplier = getStrippedLogBlock(compatWatercraftMaterial);
+            var strippedLog = woodSupplier.get();
 
             BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(strippedLog).noOcclusion();
             return new CanoeComponentBlock(properties, compatWatercraftMaterial);
@@ -121,5 +121,9 @@ public class CompatFirmaCivBlocks
                 new FirmacivFlatWoodenBoatFrameBlock(compatWatercraftMaterial, BlockBehaviour.Properties.copy(FirmacivBlocks.BOAT_FRAME_FLAT.get()));
         var entry = BLOCKS.register(name, supplier);
         _WOODEN_BOAT_FRAME_FLAT.put(compatWatercraftMaterial, entry);
+    }
+
+    public static Supplier<Block> getStrippedLogBlock(ModWatercraftMaterial material) {
+        return () -> ForgeRegistries.BLOCKS.getValue(material.getStrippedLogTexture());
     }
 }
