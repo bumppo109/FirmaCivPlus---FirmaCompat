@@ -55,7 +55,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                 return;
             }
 
-            String namespace = wood.getNamespace();
+            String namespace = stateProvider.blockTexture(Block.byItem(wood.getStrippedLog())).getNamespace();
             var variantBlockStateBuilder = stateProvider.getVariantBuilder(registryObject.get());
             CANOE_SECTION_TO_STEP_RANGE.forEach((section, canoeCarvedSteps) ->
             {
@@ -77,10 +77,8 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                         }
 
                         //Model Creation
-                        var strippedLogSideTexture = new ResourceLocation(namespace, String.format(Locale.ROOT,
-                                "block/%s", wood.getStrippedLogTexture().getPath()));
-                        var strippedLogTopTexture = new ResourceLocation(namespace, String.format(Locale.ROOT,
-                                "block/%s", wood.getStrippedLogTopTexture().getPath()));
+                        var strippedLogSideTexture = wood.getStrippedLogTexture();
+                        var strippedLogTopTexture = wood.getStrippedLogTopTexture();
                         String modelName = String.format(Locale.ROOT, "block/wood/canoe_component_block/%s/%s/%s", wood.getSerializedName(), section, step);
                         String parentName = String.format(Locale.ROOT, "block/canoe_component_block/template/%s/%s",
                                 section, step);
@@ -104,16 +102,67 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
         };
     }
 
+
+    private BiConsumer<ModWatercraftMaterial, Supplier<? extends SquaredAngleBlock>> woodRoofing(FirmaCivPlusBlockStateProvider stateProvider) {
+        return (watercraftMaterial, registryObject) ->
+        {
+            var registryWood = watercraftMaterial;
+            String namespace = stateProvider.blockTexture(registryWood.getPlanks()).getNamespace();
+            var variantBlockStateBuilder = stateProvider.getVariantBuilder(registryObject.get());
+
+            SquaredAngleBlock.FACING.getPossibleValues().forEach(facing ->
+            {
+                SquaredAngleBlock.SHAPE.getPossibleValues().forEach(shape ->
+                {
+                    int yRot = (int) ((switch(shape)
+                    {
+                        case INNER_LEFT, OUTER_LEFT -> facing.toYRot();
+                        case INNER_RIGHT, OUTER_RIGHT, STRAIGHT -> facing.toYRot() + 90;
+                    }) % 360);
+
+                    var whenFacingAndShape = variantBlockStateBuilder.partialState()
+                            .with(SquaredAngleBlock.FACING, facing)
+                            .with(SquaredAngleBlock.SHAPE, shape);
+
+                    String parentModelShape = null;
+                    switch(shape)
+                    {
+                        case INNER_RIGHT, INNER_LEFT -> parentModelShape = "_inner";
+                        case OUTER_LEFT, OUTER_RIGHT -> parentModelShape = "_outer";
+                        case STRAIGHT -> parentModelShape = "";
+                    }
+
+                    var planksTexture = new ResourceLocation(namespace, String.format(Locale.ROOT, "block/wood/planks/%s", registryWood.getSerializedName()));
+                    String modelName = "block/wood/" + registryWood.getSerializedName() + "_roofing" + parentModelShape;
+                    String parentName = "block/roofing" + parentModelShape;
+
+                    var modelFile = stateProvider.models()
+                            .withExistingParent(modelName, new ResourceLocation("alekiroofs", parentName))
+                            .texture("bottom", planksTexture)
+                            .texture("top", planksTexture)
+                            .texture("side", planksTexture);
+
+                    var configuredModel = whenFacingAndShape.modelForState()
+                            .modelFile(modelFile)
+                            .rotationY(yRot)
+                            .uvLock(yRot != 0);
+
+                    configuredModel.addModel();
+                });
+            });
+            itemModels().withExistingParent("item/wood/" + registryWood.getSerializedName() + "_roofing", modLoc("block/wood/" + registryWood.getSerializedName() + "_roofing"));
+        };
+    }
+
     static BiConsumer<ModWatercraftMaterial, Supplier<? extends Block>> woodenBoatFrameFlat(
-            final BlockStateProvider blockStateProvider, final ModelFile frameFlat) {
+            final BlockStateProvider blockStateProvider, final ModelFile.ExistingModelFile frameFlat) {
         return (wood, registryObject) -> {
 
             if(wood.isSoftwood())
             {
                 return;
             }
-            var plankTexture = new ResourceLocation(wood.getNamespace(), String.format(Locale.ROOT,
-                    "block/%s", wood.getPlanksTexture().getPath()));
+            final var plankTexture = blockStateProvider.blockTexture(wood.getDeckBlock().getBlock());
             final var multipartBuilder = blockStateProvider.getMultipartBuilder(registryObject.get()).part()
                     .modelFile(frameFlat).addModel().end();
 
@@ -144,16 +193,15 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
     }
 
     static BiConsumer<ModWatercraftMaterial, Supplier<? extends Block>> woodenBoatFrameAngled(
-            final BlockStateProvider blockStateProvider, final ModelFile straight,
-            final ModelFile inner, final ModelFile outer) {
+            final BlockStateProvider blockStateProvider, final ModelFile.ExistingModelFile straight,
+            final ModelFile.ExistingModelFile inner, final ModelFile.ExistingModelFile outer) {
         return (wood, registryObject) -> {
             if(wood.isSoftwood())
             {
                 return;
             }
 
-            var plankTexture = new ResourceLocation(wood.getNamespace(), String.format(Locale.ROOT,
-                    "block/%s", wood.getPlanksTexture().getPath()));
+            final var plankTexture = blockStateProvider.blockTexture(wood.getDeckBlock().getBlock());
 
             AngledWoodenBoatFrameBlock.FACING.getPossibleValues().forEach(facing -> {
                 AngledWoodenBoatFrameBlock.SHAPE.getPossibleValues().forEach(shape -> {
@@ -225,39 +273,6 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-
-        final ModelFile frameFlat =
-                new ModelFile.UncheckedModelFile(
-                        new ResourceLocation(Firmaciv.MOD_ID, "block/watercraft_frame/flat/frame"));
-
-        CompatFirmaCivBlocks.getWoodenBoatFrameFlatBlocks().forEach(
-                woodenBoatFrameFlat(this, frameFlat)
-        );
-
-        final ModelFile angledFrameStraight =
-                new ModelFile.UncheckedModelFile(
-                        new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/angled/straight"));
-
-        final ModelFile angledFrameInner =
-                new ModelFile.UncheckedModelFile(
-                        new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/angled/inner"));
-
-        final ModelFile angledFrameOuter =
-                new ModelFile.UncheckedModelFile(
-                        new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/angled/outer"));
-
-        CompatFirmaCivBlocks.getWoodenBoatFrameAngledBlocks().forEach(
-                woodenBoatFrameAngled(this, angledFrameStraight, angledFrameInner, angledFrameOuter)
-        );
-
-        CompatFirmaCivBlocks.getCanoeComponentBlocks().forEach(
-                canoeComponentBlock(this)
-        );
-    }
-
-    /*
-    @Override
-    protected void registerStatesAndModels() {
         models().generatedModels.get(new ResourceLocation(Firmaciv.MOD_ID, "block/watercraft_frame/flat/frame"));
         final var frameFlat = this.models().getExistingFile(new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/flat/frame"));
 
@@ -275,9 +290,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
 
         CompatFirmaCivBlocks.getCanoeComponentBlocks().forEach(canoeComponentBlock(this));
 
-        //CompatFirmaCivBlocks.getWoodRoofings().forEach(woodRoofing(this));
+        CompatFirmaCivBlocks.getWoodRoofings().forEach(woodRoofing(this));
 
     }
-
-     */
 }

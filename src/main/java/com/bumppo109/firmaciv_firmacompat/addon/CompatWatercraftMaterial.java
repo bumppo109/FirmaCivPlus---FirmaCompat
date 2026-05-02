@@ -19,11 +19,11 @@ import java.util.Optional;
 public enum CompatWatercraftMaterial implements ModWatercraftMaterial
 {
     //softwoods, makes canoes
-    ACACIA(true),
     BIRCH(true),
     JUNGLE(true),
     SPRUCE(true),
 
+    ACACIA(false),
     CHERRY(false),
     DARK_OAK(false),
     MANGROVE(false),
@@ -94,19 +94,25 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public ResourceLocation getPlanksTexture()
     {
-        return planksTexture();
+        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(planks());
+        assert resLoc != null;
+        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath());
     }
 
     @Override
     public ResourceLocation getStrippedLogTexture()
     {
-        return strippedLogTexture();
+        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(strippedLog());
+        assert resLoc != null;
+        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath());
     }
 
     @Override
     public ResourceLocation getStrippedLogTopTexture()
     {
-        return strippedLogTopTexture();
+        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(strippedLog());
+        assert resLoc != null;
+        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath() + "_top");
     }
 
     @Override
@@ -184,22 +190,7 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
         };
     }
 
-    public Block stair() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> Blocks.ACACIA_STAIRS;
-            case BIRCH    -> Blocks.BIRCH_STAIRS;
-            case CHERRY   -> Blocks.CHERRY_STAIRS;
-            case DARK_OAK -> Blocks.DARK_OAK_STAIRS;
-            case JUNGLE   -> Blocks.JUNGLE_STAIRS;
-            case MANGROVE -> Blocks.MANGROVE_STAIRS;
-            case OAK      -> Blocks.OAK_STAIRS;
-            case SPRUCE   -> Blocks.SPRUCE_STAIRS;
-            case CRIMSON  -> Blocks.CRIMSON_STAIRS;
-            case WARPED   -> Blocks.WARPED_STAIRS;
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
+    /*
     public ResourceLocation planksTexture() {
         return switch (this) {  // 'this' is the current enum instance
             case ACACIA   -> new ResourceLocation("minecraft", "block/acacia_planks");
@@ -263,5 +254,7 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
             // No default needed — enum switch is exhaustive
         };
     }
+
+     */
 
 }

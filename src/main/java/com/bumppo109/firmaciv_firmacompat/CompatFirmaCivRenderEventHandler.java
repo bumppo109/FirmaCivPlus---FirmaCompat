@@ -30,22 +30,22 @@ public final class CompatFirmaCivRenderEventHandler
                 // Canoes
                 evt.registerEntityRenderer(CompatFirmaCivEntities.getCanoes().get(woodEntry).get(),
                         context -> new CanoeRenderer(context, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID,
-                                "textures/entity/watercraft/dugout_canoe/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + ".png")));
+                                "textures/entity/watercraft/dugout_canoe/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + "/" + woodEntry.getSerializedName() + ".png")));
             }
             else
             {
                 // Rowboat
                 evt.registerEntityRenderer(CompatFirmaCivEntities.getRowboats().get(woodEntry).get(),
                         context -> new RowboatRenderer(context, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID,
-                                "textures/entity/watercraft/rowboat/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName()),
-                                CommonHelper.mapOfKeys(DyeColor.class, dyeColor -> new ResourceLocation(AlekiShips.MOD_ID,
-                                        "textures/entity/watercraft/rowboat/" + woodEntry.getSerializedName() + "/" + dyeColor.getSerializedName()))));
+                                "textures/entity/watercraft/rowboat/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + "/" + woodEntry.getSerializedName() + ".png"),
+                                CommonHelper.mapOfKeys(DyeColor.class, dyeColor -> new ResourceLocation(FirmaCivFirmaCompat.MOD_ID,
+                                        "textures/entity/watercraft/rowboat/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + "/" + dyeColor.getSerializedName() + ".png"))));
                 // Sloops
                 evt.registerEntityRenderer(CompatFirmaCivEntities.getSloops().get(woodEntry).get(),
                         context -> new SloopRenderer(context, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID,
-                                "textures/entity/watercraft/sloop/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName()),
-                                CommonHelper.mapOfKeys(DyeColor.class, dyeColor -> new ResourceLocation(AlekiShips.MOD_ID,
-                                        "textures/entity/watercraft/sloop/" + woodEntry.getSerializedName() + "/" + dyeColor.getSerializedName()))));
+                                "textures/entity/watercraft/sloop/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + "/" + woodEntry.getSerializedName() + ".png"),
+                                CommonHelper.mapOfKeys(DyeColor.class, dyeColor -> new ResourceLocation(FirmaCivFirmaCompat.MOD_ID,
+                                        "textures/entity/watercraft/sloop/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + "/" + dyeColor.getSerializedName() + ".png"))));
                 // Construction sloops
                 evt.registerEntityRenderer(CompatFirmaCivEntities.getSloopsUnderConstruction().get(woodEntry).get(),
                         context -> new SloopConstructionRenderer(context, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID,

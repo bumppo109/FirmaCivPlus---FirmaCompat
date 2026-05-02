@@ -1,0 +1,31 @@
+{
+  "name": "Ship Building Woods",
+  "category": "tfc:firmaciv",
+  "icon": "minecraft:oak_sapling",
+  "flag": "mod:firma_compat",
+  "read_by_default": true,
+  "sortnum": 100,
+  "pages":
+  [
+    {
+      "type": "patchouli:spotlight",
+      "title": "Softwoods",
+      "text": "Softwoods are soft enough to create $(l:firmaciv/canoe)Dugout Canoes$()",
+      "item": "minecraft:stripped_birch_log,minecraft:stripped_jungle_log,minecraft:stripped_spruce_log,minecraft:crimson_stem,minecraft:warped_stem"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Birch() $(li)Jungle() $(li)Spruce() $(li)Crimson() $(li)Warped()"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "title": "Hardwoods",
+      "text": "Hardwood trees are ideal for creating more sophisticated Watercraft such as $(l:firmaciv/rowboat)Rowboats$() and $(l:firmaciv/sloop)Sloops$()",
+      "item": "minecraft:acacia_planks,minecraft:cherry_planks,minecraft:mangrove_planks,minecraft:oak_planks"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Acacia() $(li)Cherry() $(li)Mangrove() $(li)Oak()"
+    }
+  ]
+}

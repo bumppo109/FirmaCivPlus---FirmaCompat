@@ -91,7 +91,7 @@ public class CompatFirmaCivBlocks
 
     private static void putCanoeComponentBlock(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "wood/canoe_component_block/" + compatWatercraftMaterial.getSerializedName();
+        String name = "wood/canoe_component_block/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         Supplier<CanoeComponentBlock> supplier = () ->
         {
             var wood = compatWatercraftMaterial.getStrippedLogBlock();
@@ -107,19 +107,19 @@ public class CompatFirmaCivBlocks
 
     private static void putAngledBoatFrameBlock(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "wood/watercraft_frame/angled/" + compatWatercraftMaterial.getSerializedName();
+        String name = "wood/watercraft_frame/angled/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         Supplier<FirmacivAngledWoodenBoatFrameBlock> supplier = () ->
                 new FirmacivAngledWoodenBoatFrameBlock(compatWatercraftMaterial, BlockBehaviour.Properties.copy(FirmacivBlocks.BOAT_FRAME_ANGLED.get()));
         var entry = BLOCKS.register(name, supplier);
         _WOODEN_BOAT_FRAME_ANGLED.put(compatWatercraftMaterial, entry);
     }
 
-    private static void putFlatBoatFrameBlock(ModWatercraftMaterial modWatercraftMaterial)
+    private static void putFlatBoatFrameBlock(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = "wood/watercraft_frame/flat/" + modWatercraftMaterial.getSerializedName();
+        String name = "wood/watercraft_frame/flat/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
         Supplier<FirmacivFlatWoodenBoatFrameBlock> supplier = () ->
-                new FirmacivFlatWoodenBoatFrameBlock(modWatercraftMaterial, BlockBehaviour.Properties.copy(FirmacivBlocks.BOAT_FRAME_FLAT.get()));
+                new FirmacivFlatWoodenBoatFrameBlock(compatWatercraftMaterial, BlockBehaviour.Properties.copy(FirmacivBlocks.BOAT_FRAME_FLAT.get()));
         var entry = BLOCKS.register(name, supplier);
-        _WOODEN_BOAT_FRAME_FLAT.put(modWatercraftMaterial, entry);
+        _WOODEN_BOAT_FRAME_FLAT.put(compatWatercraftMaterial, entry);
     }
 }

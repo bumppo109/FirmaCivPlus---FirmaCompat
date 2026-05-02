@@ -22,7 +22,7 @@ public final class DataGenerators
         ExistingFileHelper helper = evt.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
 
-        generator.addProvider(evt.includeClient(), new FirmaCivPlusBlockStateProvider(packOutput, helper));
+        //generator.addProvider(evt.includeClient(), new FirmaCivPlusBlockStateProvider(packOutput, helper));
         generator.addProvider(evt.includeClient(), new FirmaCivPlus_en_us_LanguageProvider(packOutput));
 
         var blockTagGenerator = generator.addProvider(evt.includeServer(), new FirmaCivPlusBlockTagGenerator(packOutput, evt.getLookupProvider(), helper));

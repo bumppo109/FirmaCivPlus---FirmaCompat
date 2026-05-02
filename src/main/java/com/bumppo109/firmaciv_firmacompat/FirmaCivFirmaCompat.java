@@ -1,6 +1,7 @@
 package com.bumppo109.firmaciv_firmacompat;
 
 import com.bumppo109.firmaciv_firmacompat.addon.CompatWatercraftMaterial;
+import com.bumppo109.firmaciv_firmacompat.addon.NatureSpiritWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.addon.RUWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.moonlight.CompatDynamicResourcesHandler;
 import com.bumppo109.firmaciv_firmacompat.moonlight.WoodGoodModule;
@@ -24,8 +25,9 @@ public class FirmaCivFirmaCompat {
 
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        //ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
-        ModWatercraftMaterial.addMaterials(RUWatercraftMaterial.values());
+        ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
+        //ModWatercraftMaterial.addMaterials(RUWatercraftMaterial.values());
+        //ModWatercraftMaterial.addMaterials(NatureSpiritWatercraftMaterial.values());
 
         CompatFirmaCivBlocks.init(bus);
         CompatFirmaCivItems.init(bus);
