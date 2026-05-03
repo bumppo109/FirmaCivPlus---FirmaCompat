@@ -50,7 +50,7 @@ public enum NatureSpiritWatercraftMaterial implements ModWatercraftMaterial
 
     private static Block getBlock(String name) {
         return ForgeRegistries.BLOCKS.getValue(
-                new ResourceLocation("natures_spirit", name)
+                ResourceLocation.fromNamespaceAndPath("natures_spirit", name)
         );
     }
 
@@ -72,8 +72,8 @@ public enum NatureSpiritWatercraftMaterial implements ModWatercraftMaterial
 
         // Common locations for lumber in TFC ecosystem
         ResourceLocation[] possibleLocations = {
-                new ResourceLocation("firma_compat", woodName + "_lumber"),
-                new ResourceLocation("firma_compat", "firma_compat/" + woodNamespace + "/" + woodName + "_lumber")
+                ResourceLocation.fromNamespaceAndPath("firma_compat", woodName + "_lumber"),
+                ResourceLocation.fromNamespaceAndPath("firma_compat", "firma_compat/" + woodNamespace + "/" + woodName + "_lumber")
         };
 
         for (ResourceLocation loc : possibleLocations)
@@ -118,19 +118,19 @@ public enum NatureSpiritWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public ResourceLocation getPlanksTexture()
     {
-        return new ResourceLocation(woodNamespace, "block/" + this.getSerializedName() + "_planks");
+        return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/" + this.getSerializedName() + "_planks");
     }
 
     @Override
     public ResourceLocation getStrippedLogTexture()
     {
-        return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log");
+        return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log");
     }
 
     @Override
     public ResourceLocation getStrippedLogTopTexture()
     {
-        return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log_top");
+        return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log_top");
     }
 
     @Override

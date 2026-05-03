@@ -78,7 +78,7 @@ public class CompatFirmaCivBlocks
             String name = compatWatercraftMaterial.getSerializedName() + "_roofing";
             Supplier<SquaredAngleBlock> supplier = () ->
             {
-                var stairs = new ResourceLocation("minecraft", compatWatercraftMaterial.getSerializedName() + "_stairs");
+                var stairs = ResourceLocation.fromNamespaceAndPath("minecraft", compatWatercraftMaterial.getSerializedName() + "_stairs");
                 var blockState = Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)).defaultBlockState();
                 var blockProperties = BlockBehaviour.Properties.copy(Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)));
                 return new SquaredAngleBlock(blockState, blockProperties);

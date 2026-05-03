@@ -41,7 +41,7 @@ public class FirmaCivFirmaCompat {
         CompatFirmaCivEntities.init(bus);
         ModItems.ITEMS.register(bus);
 
-        if(ModList.get().isLoaded("everycompat")){
+        if(ModList.get().isLoaded("everycomp")){
             WoodGoodModule woodModule = new WoodGoodModule();
             EveryCompatAPI.registerModule(woodModule);
         }

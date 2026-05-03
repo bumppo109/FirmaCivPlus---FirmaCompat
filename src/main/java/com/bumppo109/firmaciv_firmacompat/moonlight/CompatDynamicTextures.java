@@ -10,7 +10,7 @@ public class CompatDynamicTextures extends DynamicTexturePack {
     public static final CompatDynamicTextures INSTANCE = new CompatDynamicTextures();
 
     private CompatDynamicTextures() {
-        super(new ResourceLocation(FirmaCivFirmaCompat.MOD_ID, "dynamic_textures"));
+        super(ResourceLocation.fromNamespaceAndPath(FirmaCivFirmaCompat.MOD_ID, "dynamic_textures"));
     }
 
     // Public method to register the pack

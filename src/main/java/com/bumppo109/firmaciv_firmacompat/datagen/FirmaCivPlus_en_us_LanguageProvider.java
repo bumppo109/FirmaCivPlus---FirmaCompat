@@ -23,6 +23,8 @@ public class FirmaCivPlus_en_us_LanguageProvider extends LanguageProvider
 
     private void addBlockTranslations()
     {
+        add("block_type.firmaciv_firmacompat.roofing", "%s Roofing");
+
         CompatFirmaCivBlocks.getWoodRoofings().forEach((material, registryObject) ->
         {
             addBlock(registryObject, langify(material.getSerializedName()) + " Roofing");

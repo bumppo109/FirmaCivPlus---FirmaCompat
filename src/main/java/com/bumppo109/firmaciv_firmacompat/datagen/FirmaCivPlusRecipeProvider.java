@@ -24,25 +24,11 @@ public class FirmaCivPlusRecipeProvider extends RecipeProvider
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
 
-        var sawTag = TagKey.create(Registries.ITEM, new ResourceLocation("tfc", "saws"));
+        var sawTag = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("tfc", "saws"));
         CompatFirmaCivBlocks.getWoodRoofings().forEach((watercraftMaterial, squaredAngleBlockRegistryObject) ->
         {
-            var planks = ForgeRegistries.BLOCKS.getValue(watercraftMaterial.getPlanksTexture());
-            /*
-            //crafting roofing
-            assert planks != null;
-            AdvancedCraftingRecipeBuilder.shaped("crafting", squaredAngleBlockRegistryObject.get(), 6, CraftingBookCategory.BUILDING)
-                    .pattern("  a")
-                    .pattern(" a ")
-                    .pattern("a  ")
-                    .define('a', planks)
-                    .unlockedBy("has_plank", has(planks))
-                    .showNotification(true)
-                    .save(consumer);
-             */
-
             //kill off the boat
-            var dummy = new DisabledRecipe(new ResourceLocation(watercraftMaterial.getNamespace(), watercraftMaterial.getSerializedName() + "_boat"));
+            var dummy = new DisabledRecipe(ResourceLocation.fromNamespaceAndPath(watercraftMaterial.getNamespace(), watercraftMaterial.getSerializedName() + "_boat"));
             consumer.accept(dummy);
         });
     }

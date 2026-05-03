@@ -18,8 +18,8 @@ public class CompatFirmaCivClientEvents
 
     private static void onRegisterReloadListeners(final RegisterClientReloadListenersEvent evt)
     {
-        final ResourceLocation rowboatPaint = new ResourceLocation(AlekiShips.MOD_ID, "entity/watercraft/rowboat/paint");
-        final ResourceLocation sloopPaint = new ResourceLocation(AlekiShips.MOD_ID, "entity/watercraft/sloop/paint");
+        final ResourceLocation rowboatPaint = ResourceLocation.fromNamespaceAndPath(AlekiShips.MOD_ID, "entity/watercraft/rowboat/paint");
+        final ResourceLocation sloopPaint = ResourceLocation.fromNamespaceAndPath(AlekiShips.MOD_ID, "entity/watercraft/sloop/paint");
 
         for(final var woodEntry : ModWatercraftMaterial._ALL_WATERCRAFT_MATERIALS)
         {
@@ -27,11 +27,11 @@ public class CompatFirmaCivClientEvents
                 continue;
 
             evt.registerReloadListener(new PaintedTextureGenerator(
-                    new ResourceLocation(FirmaCivFirmaCompat.MOD_ID, "entity/watercraft/rowboat/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName()), rowboatPaint
+                    ResourceLocation.fromNamespaceAndPath(FirmaCivFirmaCompat.MOD_ID, "entity/watercraft/rowboat/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName()), rowboatPaint
             ));
 
             evt.registerReloadListener(new PaintedTextureGenerator(
-                    new ResourceLocation(FirmaCivFirmaCompat.MOD_ID, "entity/watercraft/sloop/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName()), sloopPaint
+                    ResourceLocation.fromNamespaceAndPath(FirmaCivFirmaCompat.MOD_ID, "entity/watercraft/sloop/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName()), sloopPaint
             ));
         }
     }

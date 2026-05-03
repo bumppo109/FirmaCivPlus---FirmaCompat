@@ -33,7 +33,7 @@ public abstract class ItemSizeProvider extends SimpleDataProvider {
 
     protected final void size(final String name, final Ingredient ingredient, final Weight weight,
                               @SuppressWarnings("SameParameterValue") final Size size) {
-        size(new ResourceLocation(modid, name), ingredient, weight, size);
+        size(ResourceLocation.fromNamespaceAndPath(modid, name), ingredient, weight, size);
     }
 
     protected final void size(final ResourceLocation location, final Ingredient ingredient, final Weight weight, final Size size) {

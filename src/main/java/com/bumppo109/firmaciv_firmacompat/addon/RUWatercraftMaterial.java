@@ -70,8 +70,8 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial
 
         // Common locations for lumber in TFC ecosystem
         ResourceLocation[] possibleLocations = {
-                new ResourceLocation("firma_compat", woodName + "_lumber"),
-                new ResourceLocation("firma_compat", "firma_compat/" + woodNamespace + "/" + woodName + "_lumber")
+                ResourceLocation.fromNamespaceAndPath("firma_compat", woodName + "_lumber"),
+                ResourceLocation.fromNamespaceAndPath("firma_compat", "firma_compat/" + woodNamespace + "/" + woodName + "_lumber")
         };
 
         for (ResourceLocation loc : possibleLocations)
@@ -116,16 +116,16 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public ResourceLocation getPlanksTexture()
     {
-        return new ResourceLocation(woodNamespace, "block/" + this.getSerializedName() + "_planks");
+        return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/" + this.getSerializedName() + "_planks");
     }
 
     @Override
     public ResourceLocation getStrippedLogTexture()
     {
         if(this.equals(BLUE_BIOSHROOM) || this.equals(YELLOW_BIOSHROOM) || this.equals(PINK_BIOSHROOM) || this.equals(GREEN_BIOSHROOM)){
-            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem");
+            return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem");
         } else {
-            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log");
+            return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log");
         }
     }
 
@@ -133,9 +133,9 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial
     public ResourceLocation getStrippedLogTopTexture()
     {
         if(this.equals(BLUE_BIOSHROOM) || this.equals(YELLOW_BIOSHROOM) || this.equals(PINK_BIOSHROOM) || this.equals(GREEN_BIOSHROOM)){
-            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem_top");
+            return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem_top");
         } else {
-            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log_top");
+            return ResourceLocation.fromNamespaceAndPath(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log_top");
         }
     }
 

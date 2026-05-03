@@ -84,7 +84,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                         String parentName = String.format(Locale.ROOT, "block/canoe_component_block/template/%s/%s",
                                 section, step);
                         var modelFile = stateProvider.models()
-                                .withExistingParent(modelName, new ResourceLocation("firmaciv", parentName))
+                                .withExistingParent(modelName, ResourceLocation.fromNamespaceAndPath("firmaciv", parentName))
                                 .texture("0", strippedLogSideTexture)
                                 .texture("1", strippedLogTopTexture)
                                 .texture("particle", strippedLogSideTexture);
@@ -137,7 +137,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                     String parentName = "block/roofing" + parentModelShape;
 
                     var modelFile = stateProvider.models()
-                            .withExistingParent(modelName, new ResourceLocation("alekiroofs", parentName))
+                            .withExistingParent(modelName, ResourceLocation.fromNamespaceAndPath("alekiroofs", parentName))
                             .texture("bottom", planksTexture)
                             .texture("top", planksTexture)
                             .texture("side", planksTexture);
@@ -171,7 +171,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                 {
                     final var plankModel = blockStateProvider.models().withExistingParent(
                             String.format(Locale.ROOT, "block/wood/watercraft_frame/flat/%s/%s/%s", wood.getNamespace(), wood.getSerializedName(),
-                                    BOAT_FRAME_PROGRESS_STRINGS[progress]), new ResourceLocation(AlekiShips.MOD_ID,
+                                    BOAT_FRAME_PROGRESS_STRINGS[progress]), ResourceLocation.fromNamespaceAndPath(AlekiShips.MOD_ID,
                                     String.format(Locale.ROOT, "block/watercraft_frame/flat/template/%s",
                                             BOAT_FRAME_PROGRESS_STRINGS[progress]))).texture("plank", plankTexture);
 
@@ -183,7 +183,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                 }
                 else
                 {
-                    final var plankModel = blockStateProvider.models().getExistingFile(new ResourceLocation(Firmaciv.MOD_ID, String.format(Locale.ROOT, "block/watercraft_frame/flat/bolt/%s", BOAT_FRAME_PROGRESS_STRINGS[progress % 4])));
+                    final var plankModel = blockStateProvider.models().getExistingFile(ResourceLocation.fromNamespaceAndPath(Firmaciv.MOD_ID, String.format(Locale.ROOT, "block/watercraft_frame/flat/bolt/%s", BOAT_FRAME_PROGRESS_STRINGS[progress % 4])));
 
                     multipartBuilder.part().modelFile(plankModel).addModel()
                             .condition(FlatWoodenBoatFrameBlock.FRAME_PROCESSED, IntStream.range(progress, 8).boxed().toArray(Integer[]::new));
@@ -222,7 +222,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                             final var plankModel = blockStateProvider.models().withExistingParent(
                                             String.format(Locale.ROOT, "block/wood/watercraft_frame/angled/%s/%s/%s/%s", wood.getNamespace(),
                                                     wood.getSerializedName(), modelShape, BOAT_FRAME_PROGRESS_STRINGS[progress]),
-                                            new ResourceLocation(AlekiShips.MOD_ID,
+                                            ResourceLocation.fromNamespaceAndPath(AlekiShips.MOD_ID,
                                                     String.format(Locale.ROOT, "block/watercraft_frame/angled/template/%s/%s",
                                                             modelShape, BOAT_FRAME_PROGRESS_STRINGS[progress])))
                                     .texture("plank", plankTexture);
@@ -235,7 +235,7 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
                         }
                         else
                         {
-                            final var plankModel = blockStateProvider.models().getExistingFile(new ResourceLocation(Firmaciv.MOD_ID, String.format(Locale.ROOT, "block/watercraft_frame/angled/bolt/%s/%s", modelShape, BOAT_FRAME_PROGRESS_STRINGS[progress % 4])));
+                            final var plankModel = blockStateProvider.models().getExistingFile(ResourceLocation.fromNamespaceAndPath(Firmaciv.MOD_ID, String.format(Locale.ROOT, "block/watercraft_frame/angled/bolt/%s/%s", modelShape, BOAT_FRAME_PROGRESS_STRINGS[progress % 4])));
 
                             multipartBuilder.part().modelFile(plankModel).rotationY(yRot)/*.uvLock(yRot != 0)*/.addModel()
                                     .condition(AngledWoodenBoatFrameBlock.FACING, facing)
@@ -273,18 +273,18 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        models().generatedModels.get(new ResourceLocation(Firmaciv.MOD_ID, "block/watercraft_frame/flat/frame"));
-        final var frameFlat = this.models().getExistingFile(new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/flat/frame"));
+        models().generatedModels.get(ResourceLocation.fromNamespaceAndPath(Firmaciv.MOD_ID, "block/watercraft_frame/flat/frame"));
+        final var frameFlat = this.models().getExistingFile(ResourceLocation.fromNamespaceAndPath(Firmaciv.MOD_ID,"block/watercraft_frame/flat/frame"));
 
         CompatFirmaCivBlocks.getWoodenBoatFrameFlatBlocks().forEach(
                 FirmaCivPlusBlockStateProvider.woodenBoatFrameFlat(this, frameFlat));
 
         final ModelFile.ExistingModelFile angledFrameStraight = this.models()
-                .getExistingFile(new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/angled/straight"));
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(Firmaciv.MOD_ID,"block/watercraft_frame/angled/straight"));
         final ModelFile.ExistingModelFile angledFrameInner = this.models()
-                .getExistingFile(new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/angled/inner"));
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(Firmaciv.MOD_ID,"block/watercraft_frame/angled/inner"));
         final ModelFile.ExistingModelFile angledFrameOuter = this.models()
-                .getExistingFile(new ResourceLocation(Firmaciv.MOD_ID,"block/watercraft_frame/angled/outer"));
+                .getExistingFile(ResourceLocation.fromNamespaceAndPath(Firmaciv.MOD_ID,"block/watercraft_frame/angled/outer"));
 
         CompatFirmaCivBlocks.getWoodenBoatFrameAngledBlocks().forEach(woodenBoatFrameAngled(this, angledFrameStraight, angledFrameInner, angledFrameOuter));
 

@@ -36,7 +36,7 @@ public class FirmaCivPlusEntityTypeTagsGenerator extends EntityTypeTagsProvider
             tag(AlekiShipsTags.Entities.SLOOPS)
                     .addOptional(getResourceLocation(entityTypeRegistryObject.get()));
 
-            tag(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("carryon", "entity_blacklist")))
+            tag(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("carryon", "entity_blacklist")))
                     .addOptional(getResourceLocation(entityTypeRegistryObject.get()));
         });
     }

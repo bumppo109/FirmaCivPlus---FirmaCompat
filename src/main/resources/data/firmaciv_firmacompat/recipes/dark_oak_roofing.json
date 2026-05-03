@@ -1,22 +1,18 @@
 {
-  "type": "tfc:advanced_shaped_crafting",
-  "category": "building",
-  "input_column": 0,
-  "input_row": 0,
+  "type": "minecraft:crafting_shaped",
   "key": {
-    "a": "minecraft:dark_oak_planks"
+    "#": {
+      "item": "minecraft:dark_oak_planks"
+    }
   },
   "pattern": [
-    "  a",
-    " a ",
-    "a  "
+    "#  ",
+    " # ",
+    "  #"
   ],
   "result": {
-    "modifiers": [],
-    "stack": {
-      "count": 6,
-      "item": "firmaciv_firmacompat:dark_oak_roofing"
-    }
+    "count": 6,
+    "item": "firmaciv_firmacompat:dark_oak_roofing"
   },
   "show_notification": true
 }

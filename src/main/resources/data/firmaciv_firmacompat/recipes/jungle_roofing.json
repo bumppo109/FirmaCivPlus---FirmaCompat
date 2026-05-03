@@ -1,22 +1,18 @@
 {
-  "type": "tfc:advanced_shaped_crafting",
-  "category": "building",
-  "input_column": 0,
-  "input_row": 0,
+  "type": "minecraft:crafting_shaped",
   "key": {
-    "a": "minecraft:jungle_planks"
+    "#": {
+      "item": "minecraft:jungle_planks"
+    }
   },
   "pattern": [
-    "  a",
-    " a ",
-    "a  "
+    "#  ",
+    " # ",
+    "  #"
   ],
   "result": {
-    "modifiers": [],
-    "stack": {
-      "count": 6,
-      "item": "firmaciv_firmacompat:jungle_roofing"
-    }
+    "count": 6,
+    "item": "firmaciv_firmacompat:jungle_roofing"
   },
   "show_notification": true
 }

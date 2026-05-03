@@ -55,7 +55,7 @@ public class FirmaCivPlusBlockTagGenerator extends BlockTagsProvider
 
         CompatFirmaCivBlocks.getWoodRoofings().forEach((registryWood, squaredAngleBlockRegistryObject) ->
         {
-            tag(TagKey.create(Registries.BLOCK, new ResourceLocation("alekiroofs", "roofing")))
+            tag(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("alekiroofs", "roofing")))
                     .addOptional(getResourceLocation(squaredAngleBlockRegistryObject.get()));
             tag(BlockTags.MINEABLE_WITH_AXE)
                     .addOptional(getResourceLocation(squaredAngleBlockRegistryObject.get()));
