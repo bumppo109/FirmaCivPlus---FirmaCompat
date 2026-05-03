@@ -15,8 +15,6 @@ import static com.mojang.text2speech.Narrator.LOGGER;
 
 public interface ModWatercraftMaterial extends BoatMaterial, CanoeMaterial
 {
-    //ModRegistryWood getWood();
-
     boolean isSoftwood();
     String getNamespace();
 
@@ -26,7 +24,6 @@ public interface ModWatercraftMaterial extends BoatMaterial, CanoeMaterial
     ResourceLocation getPlanksTexture();
     ResourceLocation getStrippedLogTexture();
     ResourceLocation getStrippedLogTopTexture();
-    //CompatWood getWoodType();
 
     HashSet<ModWatercraftMaterial> _ALL_WATERCRAFT_MATERIALS = new HashSet<>();
 
@@ -43,9 +40,17 @@ public interface ModWatercraftMaterial extends BoatMaterial, CanoeMaterial
         {
             if(material.isSoftwood())
             {
+                Block block = material.getStrippedLogBlock();
+
+                if (!(block instanceof RotatedPillarBlock pillar)) {
+                    LOGGER.error("Invalid stripped log for material: {}", material);
+                    continue;
+                }
+
                 CanoeComponentBlock.registerCanoeComponent(
-                        (RotatedPillarBlock) material.getStrippedLogBlock(),
-                                CompatFirmaCivBlocks.getCanoeComponentBlocks().get(material).get());
+                        pillar,
+                        CompatFirmaCivBlocks.getCanoeComponentBlocks().get(material).get()
+                );
             }
             else
             {

@@ -1,9 +1,8 @@
 package com.bumppo109.firmaciv_firmacompat;
 
 import com.bumppo109.firmaciv_firmacompat.addon.CompatWatercraftMaterial;
-import com.bumppo109.firmaciv_firmacompat.addon.NatureSpiritWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.addon.RUWatercraftMaterial;
-import com.bumppo109.firmaciv_firmacompat.moonlight.CompatDynamicResourcesHandler;
+import com.bumppo109.firmaciv_firmacompat.moonlight.ClientDynamicResourcesHandler;
 import com.bumppo109.firmaciv_firmacompat.moonlight.WoodGoodModule;
 import com.mojang.logging.LogUtils;
 import net.mehvahdjukaar.every_compat.api.EveryCompatAPI;
@@ -27,7 +26,6 @@ public class FirmaCivFirmaCompat {
 
         ModWatercraftMaterial.addMaterials(CompatWatercraftMaterial.values());
         ModWatercraftMaterial.addMaterials(RUWatercraftMaterial.values());
-        //ModWatercraftMaterial.addMaterials(NatureSpiritWatercraftMaterial.values());
 
         CompatFirmaCivBlocks.init(bus);
         CompatFirmaCivItems.init(bus);
@@ -41,7 +39,7 @@ public class FirmaCivFirmaCompat {
         }
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            CompatDynamicResourcesHandler.INSTANCE.register();
+            ClientDynamicResourcesHandler.INSTANCE.register();
 
             CompatFirmaCivClientEvents.init(bus);
             CompatFirmaCivRenderEventHandler.init(bus);

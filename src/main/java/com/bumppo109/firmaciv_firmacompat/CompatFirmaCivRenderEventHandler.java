@@ -49,7 +49,7 @@ public final class CompatFirmaCivRenderEventHandler
                 // Construction sloops
                 evt.registerEntityRenderer(CompatFirmaCivEntities.getSloopsUnderConstruction().get(woodEntry).get(),
                         context -> new SloopConstructionRenderer(context, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID,
-                                "textures/entity/watercraft/sloop_construction/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + ".png")));
+                                "textures/entity/watercraft/sloop_construction/" + woodEntry.getNamespace() + "/" + woodEntry.getSerializedName() + "/" + woodEntry.getSerializedName() + ".png")));
             }
         }
     }

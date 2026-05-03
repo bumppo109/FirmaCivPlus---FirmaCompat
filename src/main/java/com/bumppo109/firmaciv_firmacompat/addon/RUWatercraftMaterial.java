@@ -17,35 +17,46 @@ import net.regions_unexplored.block.RuBlocks;
 import java.util.Locale;
 import java.util.Optional;
 
-public enum RUWatercraftMaterial implements ModWatercraftMaterial {
-    CYPRESS(true),
-    LARCH(true),
-    PINE(true),
-    SOCOTRA(true),
-    JOSHUA(true),
+public enum RUWatercraftMaterial implements ModWatercraftMaterial
+{
+    //softwoods, makes canoes
+    CYPRESS(true, RuBlocks.CYPRESS_PLANKS.get(), RuBlocks.STRIPPED_CYPRESS_LOG.get()),
+    LARCH(true, RuBlocks.LARCH_PLANKS.get(), RuBlocks.STRIPPED_LARCH_LOG.get()),
+    PINE(true, RuBlocks.PINE_PLANKS.get(), RuBlocks.STRIPPED_PINE_LOG.get()),
+    SOCOTRA(true, RuBlocks.SOCOTRA_PLANKS.get(), RuBlocks.STRIPPED_SOCOTRA_LOG.get()),
+    JOSHUA(true, RuBlocks.JOSHUA_PLANKS.get(), RuBlocks.STRIPPED_JOSHUA_LOG.get()),
 
-    REDWOOD(false),
-    BAOBAB(false),
-    BLACKWOOD(false),
-    EUCALYPTUS(false),
-    KAPOK(false),
-    MAGNOLIA(false),
-    MAPLE(false),
-    MAUVE(false),
-    PALM(false),
-    WILLOW(false),
-    BRIMWOOD(false),
-    COBALT(false),
+    REDWOOD(false, RuBlocks.REDWOOD_PLANKS.get(), RuBlocks.STRIPPED_REDWOOD_LOG.get()),
+    BAOBAB(false, RuBlocks.BAOBAB_PLANKS.get(), RuBlocks.STRIPPED_BAOBAB_LOG.get()),
+    BLACKWOOD(false, RuBlocks.BLACKWOOD_PLANKS.get(), RuBlocks.STRIPPED_BLACKWOOD_LOG.get()),
+    EUCALYPTUS(false, RuBlocks.EUCALYPTUS_PLANKS.get(), RuBlocks.STRIPPED_EUCALYPTUS_LOG.get()),
+    KAPOK(false, RuBlocks.KAPOK_PLANKS.get(), RuBlocks.STRIPPED_KAPOK_LOG.get()),
+    MAGNOLIA(false, RuBlocks.MAGNOLIA_PLANKS.get(), RuBlocks.STRIPPED_MAGNOLIA_LOG.get()),
+    MAPLE(false, RuBlocks.MAPLE_PLANKS.get(), RuBlocks.STRIPPED_MAPLE_LOG.get()),
+    MAUVE(false, RuBlocks.MAUVE_PLANKS.get(), RuBlocks.STRIPPED_MAUVE_LOG.get()),
+    PALM(false, RuBlocks.PALM_PLANKS.get(), RuBlocks.STRIPPED_PALM_LOG.get()),
+    WILLOW(false, RuBlocks.WILLOW_PLANKS.get(), RuBlocks.STRIPPED_WILLOW_LOG.get()),
+    BRIMWOOD(false, RuBlocks.BRIMWOOD_PLANKS.get(), RuBlocks.STRIPPED_BRIMWOOD_LOG.get()),
+    COBALT(false, RuBlocks.COBALT_PLANKS.get(), RuBlocks.STRIPPED_COBALT_LOG.get()),
 
-    GREEN_BIOSHROOM(true),
-    BLUE_BIOSHROOM(true),
-    PINK_BIOSHROOM(true),
-    YELLOW_BIOSHROOM(true)
+    GREEN_BIOSHROOM(false, RuBlocks.GREEN_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_GREEN_BIOSHROOM_STEM.get()),
+    BLUE_BIOSHROOM(false, RuBlocks.BLUE_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_BLUE_BIOSHROOM_STEM.get()),
+    YELLOW_BIOSHROOM(false, RuBlocks.YELLOW_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_YELLOW_BIOSHROOM_STEM.get()),
+    PINK_BIOSHROOM(false, RuBlocks.PINK_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_PINK_BIOSHROOM_STEM.get())
     ;
 
     public final boolean isSoftwood;
+    private final Block planks;
+    private final Block strippedLog;
 
-    RUWatercraftMaterial(boolean isSoftwood) { this.isSoftwood = isSoftwood; }
+    final String woodNamespace = "regions_unexplored";
+
+
+    RUWatercraftMaterial(boolean isSoftwood, Block planks, Block strippedLog) {
+        this.isSoftwood = isSoftwood;
+        this.planks = planks;
+        this.strippedLog = strippedLog;
+    }
 
     private Item railingItem = null;
 
@@ -86,43 +97,45 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
     @Override
     public Item getStrippedLog()
     {
-        return this.strippedLog().asItem();
+        return strippedLog.asItem();
     }
 
     @Override
     public Block getPlanks()
     {
-        return this.planks();
+        return planks;
     }
 
     @Override
     public Block getStrippedLogBlock()
     {
-        return this.strippedLog();
+        return strippedLog;
     }
 
     @Override
     public ResourceLocation getPlanksTexture()
     {
-        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(planks());
-        assert resLoc != null;
-        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath());
+        return new ResourceLocation(woodNamespace, "block/" + this.getSerializedName() + "_planks");
     }
 
     @Override
     public ResourceLocation getStrippedLogTexture()
     {
-        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(strippedLog());
-        assert resLoc != null;
-        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath());
+        if(this.equals(BLUE_BIOSHROOM) || this.equals(YELLOW_BIOSHROOM) || this.equals(PINK_BIOSHROOM) || this.equals(GREEN_BIOSHROOM)){
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem");
+        } else {
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log");
+        }
     }
 
     @Override
     public ResourceLocation getStrippedLogTopTexture()
     {
-        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(strippedLog());
-        assert resLoc != null;
-        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath() + "_top");
+        if(this.equals(BLUE_BIOSHROOM) || this.equals(YELLOW_BIOSHROOM) || this.equals(PINK_BIOSHROOM) || this.equals(GREEN_BIOSHROOM)){
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem_top");
+        } else {
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log_top");
+        }
     }
 
     @Override
@@ -134,7 +147,7 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
     @Override
     public BlockState getDeckBlock()
     {
-        return this.planks().defaultBlockState();
+        return planks.defaultBlockState();
     }
 
     @Override
@@ -163,56 +176,5 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial {
     public boolean isSoftwood()
     {
         return isSoftwood;
-    }
-
-    // ============= Add References
-    final String woodNamespace = "regions_unexplored";
-
-    public Block planks() {
-        Block block = ForgeRegistries.BLOCKS.getValue(
-                new ResourceLocation(woodNamespace, this.getSerializedName() + "_planks")
-        );
-
-        return block != null ? block : Blocks.AIR;
-    }
-
-    /*
-    public Block strippedLog() {
-        return switch (this) {  // 'this' is the current enum instance
-            case CYPRESS   -> RuBlocks.STRIPPED_CYPRESS_LOG.get();
-            case LARCH-> RuBlocks.STRIPPED_LARCH_LOG.get();
-            case PINE-> RuBlocks.STRIPPED_PINE_LOG.get();
-            case SOCOTRA-> RuBlocks.STRIPPED_SOCOTRA_LOG.get();
-            case JOSHUA-> RuBlocks.STRIPPED_JOSHUA_LOG.get();
-
-            case REDWOOD-> RuBlocks.STRIPPED_REDWOOD_LOG.get();
-            case BAOBAB-> RuBlocks.STRIPPED_BAOBAB_LOG.get();
-            case BLACKWOOD-> RuBlocks.STRIPPED_BLACKWOOD_LOG.get();
-            case EUCALYPTUS-> RuBlocks.STRIPPED_EUCALYPTUS_LOG.get();
-            case KAPOK-> RuBlocks.STRIPPED_KAPOK_LOG.get();
-            case MAGNOLIA-> RuBlocks.STRIPPED_MAGNOLIA_LOG.get();
-            case MAPLE-> RuBlocks.STRIPPED_MAPLE_LOG.get();
-            case MAUVE-> RuBlocks.STRIPPED_MAUVE_LOG.get();
-            case PALM-> RuBlocks.STRIPPED_PALM_LOG.get();
-            case WILLOW-> RuBlocks.STRIPPED_WILLOW_LOG.get();
-            case BRIMWOOD-> RuBlocks.STRIPPED_BRIMWOOD_LOG.get();
-            case COBALT-> RuBlocks.STRIPPED_COBALT_LOG.get();
-
-            case GREEN_BIOSHROOM -> RuBlocks.STRIPPED_GREEN_BIOSHROOM_HYPHAE.get();
-            case BLUE_BIOSHROOM -> RuBlocks.STRIPPED_BLUE_BIOSHROOM_HYPHAE.get();
-            case PINK_BIOSHROOM -> RuBlocks.STRIPPED_PINK_BIOSHROOM_HYPHAE.get();
-            case YELLOW_BIOSHROOM -> RuBlocks.STRIPPED_YELLOW_BIOSHROOM_HYPHAE.get();
-        };
-    }
-
-     */
-    public Block strippedLog() {
-        Block block;
-        if(this.equals(BLUE_BIOSHROOM) || this.equals(YELLOW_BIOSHROOM) || this.equals(GREEN_BIOSHROOM) || this.equals(PINK_BIOSHROOM)){
-            block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(woodNamespace, "stripped_" + this.getSerializedName() + "_hyphae"));
-        } else {
-            block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(woodNamespace, "stripped_" + this.getSerializedName() + "_log"));
-        }
-        return block != null ? block : Blocks.AIR;
     }
 }

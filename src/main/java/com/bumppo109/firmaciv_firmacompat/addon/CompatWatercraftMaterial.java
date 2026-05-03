@@ -14,28 +14,38 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 public enum CompatWatercraftMaterial implements ModWatercraftMaterial
 {
     //softwoods, makes canoes
-    BIRCH(true),
-    JUNGLE(true),
-    SPRUCE(true),
+    BIRCH(true, Blocks.BIRCH_PLANKS, Blocks.STRIPPED_BIRCH_LOG),
+    JUNGLE(true, Blocks.JUNGLE_PLANKS, Blocks.STRIPPED_JUNGLE_LOG),
+    SPRUCE(true, Blocks.SPRUCE_PLANKS, Blocks.STRIPPED_SPRUCE_LOG),
 
-    ACACIA(false),
-    CHERRY(false),
-    DARK_OAK(false),
-    MANGROVE(false),
-    OAK(false),
+    ACACIA(false, Blocks.ACACIA_PLANKS, Blocks.STRIPPED_ACACIA_LOG),
+    CHERRY(false, Blocks.CHERRY_PLANKS, Blocks.STRIPPED_CHERRY_LOG),
+    DARK_OAK(false, Blocks.DARK_OAK_PLANKS, Blocks.STRIPPED_DARK_OAK_LOG),
+    MANGROVE(false, Blocks.MANGROVE_PLANKS, Blocks.STRIPPED_MANGROVE_LOG),
+    OAK(false, Blocks.OAK_PLANKS, Blocks.STRIPPED_OAK_LOG),
 
-    CRIMSON(true),
-    WARPED(true),
+    CRIMSON(false, Blocks.CRIMSON_PLANKS, Blocks.STRIPPED_CRIMSON_STEM),
+    WARPED(false, Blocks.WARPED_PLANKS, Blocks.STRIPPED_WARPED_STEM),
     ;
 
     public final boolean isSoftwood;
+    private final Block planks;
+    private final Block strippedLog;
 
-    CompatWatercraftMaterial(boolean isSoftwood) { this.isSoftwood = isSoftwood; }
+    final String woodNamespace = "minecraft";
+
+
+    CompatWatercraftMaterial(boolean isSoftwood, Block planks, Block strippedLog) {
+        this.isSoftwood = isSoftwood;
+        this.planks = planks;
+        this.strippedLog = strippedLog;
+    }
 
     private Item railingItem = null;
 
@@ -76,43 +86,45 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public Item getStrippedLog()
     {
-        return this.strippedLog().asItem();
+        return strippedLog.asItem();
     }
 
     @Override
     public Block getPlanks()
     {
-        return planks();        // keep your internal method or inline it
+        return planks;
     }
 
     @Override
     public Block getStrippedLogBlock()
     {
-        return strippedLog();
+        return strippedLog;
     }
 
     @Override
     public ResourceLocation getPlanksTexture()
     {
-        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(planks());
-        assert resLoc != null;
-        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath());
+        return new ResourceLocation(woodNamespace, "block/" + this.getSerializedName() + "_planks");
     }
 
     @Override
     public ResourceLocation getStrippedLogTexture()
     {
-        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(strippedLog());
-        assert resLoc != null;
-        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath());
+        if(this.equals(CRIMSON) || this.equals(WARPED)){
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem");
+        } else {
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log");
+        }
     }
 
     @Override
     public ResourceLocation getStrippedLogTopTexture()
     {
-        ResourceLocation resLoc = ForgeRegistries.BLOCKS.getKey(strippedLog());
-        assert resLoc != null;
-        return new ResourceLocation(resLoc.getNamespace(), "block/" + resLoc.getPath() + "_top");
+        if(this.equals(CRIMSON) || this.equals(WARPED)){
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_stem_top");
+        } else {
+            return new ResourceLocation(woodNamespace, "block/stripped_" + this.getSerializedName() + "_log_top");
+        }
     }
 
     @Override
@@ -124,7 +136,7 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public BlockState getDeckBlock()
     {
-        return this.planks().defaultBlockState();
+        return planks.defaultBlockState();
     }
 
     @Override
@@ -154,107 +166,4 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     {
         return isSoftwood;
     }
-
-    // ============= Add References
-    final String woodNamespace = "firma_compat";
-
-    public Block planks() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> Blocks.ACACIA_PLANKS;
-            case BIRCH    -> Blocks.BIRCH_PLANKS;
-            case CHERRY   -> Blocks.CHERRY_PLANKS;
-            case DARK_OAK -> Blocks.DARK_OAK_PLANKS;
-            case JUNGLE   -> Blocks.JUNGLE_PLANKS;
-            case MANGROVE -> Blocks.MANGROVE_PLANKS;
-            case OAK      -> Blocks.OAK_PLANKS;
-            case SPRUCE   -> Blocks.SPRUCE_PLANKS;
-            case CRIMSON  -> Blocks.CRIMSON_PLANKS;
-            case WARPED   -> Blocks.WARPED_PLANKS;
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
-    public Block strippedLog() {
-        return switch (this) {
-            case ACACIA   -> Blocks.STRIPPED_ACACIA_LOG;
-            case BIRCH    -> Blocks.STRIPPED_BIRCH_LOG;
-            case CHERRY   -> Blocks.STRIPPED_CHERRY_LOG;
-            case DARK_OAK -> Blocks.STRIPPED_DARK_OAK_LOG;
-            case JUNGLE   -> Blocks.STRIPPED_JUNGLE_LOG;
-            case MANGROVE -> Blocks.STRIPPED_MANGROVE_LOG;
-            case OAK      -> Blocks.STRIPPED_OAK_LOG;
-            case SPRUCE   -> Blocks.STRIPPED_SPRUCE_LOG;
-            case CRIMSON  -> Blocks.STRIPPED_CRIMSON_STEM;   // Note: stems for fungi
-            case WARPED   -> Blocks.STRIPPED_WARPED_STEM;
-            // No default needed
-        };
-    }
-
-    /*
-    public ResourceLocation planksTexture() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> new ResourceLocation("minecraft", "block/acacia_planks");
-            case BIRCH    -> new ResourceLocation("minecraft", "block/birch_planks");
-            case CHERRY   -> new ResourceLocation("minecraft", "block/cherry_planks");
-            case DARK_OAK -> new ResourceLocation("minecraft", "block/dark_oak_planks");
-            case JUNGLE   -> new ResourceLocation("minecraft", "block/jungle_planks");
-            case MANGROVE -> new ResourceLocation("minecraft", "block/mangrove_planks");
-            case OAK      -> new ResourceLocation("minecraft", "block/oak_planks");
-            case SPRUCE   -> new ResourceLocation("minecraft", "block/spruce_planks");
-            case CRIMSON  -> new ResourceLocation("minecraft", "block/crimson_planks");
-            case WARPED   -> new ResourceLocation("minecraft", "block/warped_planks");
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
-    public ResourceLocation logSideTexture() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> new ResourceLocation("minecraft", "block/acacia_log");
-            case BIRCH    -> new ResourceLocation("minecraft", "block/birch_log");
-            case CHERRY   -> new ResourceLocation("minecraft", "block/cherry_log");
-            case DARK_OAK -> new ResourceLocation("minecraft", "block/dark_oak_log");
-            case JUNGLE   -> new ResourceLocation("minecraft", "block/jungle_log");
-            case MANGROVE -> new ResourceLocation("minecraft", "block/mangrove_log");
-            case OAK      -> new ResourceLocation("minecraft", "block/oak_log");
-            case SPRUCE   -> new ResourceLocation("minecraft", "block/spruce_log");
-            case CRIMSON  -> new ResourceLocation("minecraft", "block/crimson_stem");
-            case WARPED   -> new ResourceLocation("minecraft", "block/warped_stem");
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
-    public ResourceLocation strippedLogTexture() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> new ResourceLocation("minecraft", "block/stripped_acacia_log");
-            case BIRCH    -> new ResourceLocation("minecraft", "block/stripped_birch_log");
-            case CHERRY   -> new ResourceLocation("minecraft", "block/stripped_cherry_log");
-            case DARK_OAK -> new ResourceLocation("minecraft", "block/stripped_dark_oak_log");
-            case JUNGLE   -> new ResourceLocation("minecraft", "block/stripped_jungle_log");
-            case MANGROVE -> new ResourceLocation("minecraft", "block/stripped_mangrove_log");
-            case OAK      -> new ResourceLocation("minecraft", "block/stripped_oak_log");
-            case SPRUCE   -> new ResourceLocation("minecraft", "block/stripped_spruce_log");
-            case CRIMSON  -> new ResourceLocation("minecraft", "block/stripped_crimson_stem");
-            case WARPED   -> new ResourceLocation("minecraft", "block/stripped_warped_stem");
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
-    public ResourceLocation strippedLogTopTexture() {
-        return switch (this) {  // 'this' is the current enum instance
-            case ACACIA   -> new ResourceLocation("minecraft", "block/stripped_acacia_log_top");
-            case BIRCH    -> new ResourceLocation("minecraft", "block/stripped_birch_log_top");
-            case CHERRY   -> new ResourceLocation("minecraft", "block/stripped_cherry_log_top");
-            case DARK_OAK -> new ResourceLocation("minecraft", "block/stripped_dark_oak_log_top");
-            case JUNGLE   -> new ResourceLocation("minecraft", "block/stripped_jungle_log_top");
-            case MANGROVE -> new ResourceLocation("minecraft", "block/stripped_mangrove_log_top");
-            case OAK      -> new ResourceLocation("minecraft", "block/stripped_oak_log_top");
-            case SPRUCE   -> new ResourceLocation("minecraft", "block/stripped_spruce_log_top");
-            case CRIMSON  -> new ResourceLocation("minecraft", "block/stripped_crimson_stem_top");
-            case WARPED   -> new ResourceLocation("minecraft", "block/stripped_warped_stem_top");
-            // No default needed — enum switch is exhaustive
-        };
-    }
-
-     */
-
 }

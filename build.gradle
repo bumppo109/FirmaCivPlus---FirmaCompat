@@ -188,7 +188,7 @@ dependencies {
     //implementation fg.deobf("curse.maven:natures-spirit-1044992:6962783")
 
     //Regions Unexplored
-    minecraftLibrary fg.deobf("curse.maven:regions-unexplored-659110:5558225")
+    implementation fg.deobf("curse.maven:regions-unexplored-659110:5558225")
     //Terrablender
     implementation fg.deobf("curse.maven:terrablender-563928:6290448")
 

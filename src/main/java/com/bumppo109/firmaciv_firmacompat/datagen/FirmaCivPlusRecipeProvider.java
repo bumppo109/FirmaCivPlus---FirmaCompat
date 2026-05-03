@@ -28,7 +28,6 @@ public class FirmaCivPlusRecipeProvider extends RecipeProvider
         CompatFirmaCivBlocks.getWoodRoofings().forEach((watercraftMaterial, squaredAngleBlockRegistryObject) ->
         {
             var planks = ForgeRegistries.BLOCKS.getValue(watercraftMaterial.getPlanksTexture());
-
             /*
             //crafting roofing
             assert planks != null;
@@ -40,18 +39,6 @@ public class FirmaCivPlusRecipeProvider extends RecipeProvider
                     .unlockedBy("has_plank", has(planks))
                     .showNotification(true)
                     .save(consumer);
-
-            var lumber = watercraftMaterial.getRailing();
-            //uncrafting roofing
-            AdvancedCraftingRecipeBuilder.shapeless("crafting", watercraftMaterial.getRailing(), 2)
-                    .requires(squaredAngleBlockRegistryObject.get())
-                    .requires(sawTag)
-                    .primaryIngredient(Ingredient.of(sawTag))
-                    .damageInputs()
-                    .unlockedBy("has_saw", has(sawTag))
-                    .unlockedBy("has_roofing", has(squaredAngleBlockRegistryObject.get()))
-                    .save(consumer, new ResourceLocation(FirmaCivFirmaCompat.MOD_ID, "crafting/" + watercraftMaterial.getSerializedName() + "_lumber_from_" + watercraftMaterial.getSerializedName() + "_roof"));
-
              */
 
             //kill off the boat

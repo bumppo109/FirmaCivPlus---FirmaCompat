@@ -5,10 +5,12 @@ import com.alekiponi.firmaciv.common.block.CanoeComponentBlock;
 import com.alekiponi.firmaciv.common.block.FirmacivAngledWoodenBoatFrameBlock;
 import com.alekiponi.firmaciv.common.block.FirmacivBlocks;
 import com.alekiponi.firmaciv.common.block.FirmacivFlatWoodenBoatFrameBlock;
+import com.bumppo109.firmaciv_firmacompat.addon.CompatWatercraftMaterial;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -54,7 +56,7 @@ public class CompatFirmaCivBlocks
         LOGGER.info("FirmaCiv FirmaCompat adding Blocks");
         for(var woodEntry : ModWatercraftMaterial._ALL_WATERCRAFT_MATERIALS)
         {
-            //putWoodRoofing(woodEntry);
+            putWoodRoofing(woodEntry);
             if(woodEntry.isSoftwood())
             {
                 putCanoeComponentBlock(woodEntry);
@@ -70,39 +72,41 @@ public class CompatFirmaCivBlocks
             BLOCKS.register(eventBus);
     }
 
-    /*
     private static void putWoodRoofing(ModWatercraftMaterial compatWatercraftMaterial)
     {
-        String name = compatWatercraftMaterial.getSerializedName() + "_roofing";
-        Supplier<SquaredAngleBlock> supplier = () ->
-        {
-            var stairs = new ResourceLocation("minecraft", compatWatercraftMaterial.getSerializedName() + "_stairs");
-            var blockState = Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)).defaultBlockState();
-            var blockProperties = BlockBehaviour.Properties.copy(Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)));
-            return new SquaredAngleBlock(blockState, blockProperties);
-        };
+        if(compatWatercraftMaterial instanceof CompatWatercraftMaterial) {
+            String name = compatWatercraftMaterial.getSerializedName() + "_roofing";
+            Supplier<SquaredAngleBlock> supplier = () ->
+            {
+                var stairs = new ResourceLocation("minecraft", compatWatercraftMaterial.getSerializedName() + "_stairs");
+                var blockState = Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)).defaultBlockState();
+                var blockProperties = BlockBehaviour.Properties.copy(Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(stairs)));
+                return new SquaredAngleBlock(blockState, blockProperties);
+            };
 
-        var entry = BLOCKS.register(name, supplier);
-        _WOOD_ROOFING.put(compatWatercraftMaterial, entry);
-        CompatFirmaCivItems.ITEMS.register(name, () -> new BlockItem(entry.get(), new Item.Properties()));
+            var entry = BLOCKS.register(name, supplier);
+            _WOOD_ROOFING.put(compatWatercraftMaterial, entry);
+            CompatFirmaCivItems.ITEMS.register(name, () -> new BlockItem(entry.get(), new Item.Properties()));
+        }
     }
 
-     */
+    private static void putCanoeComponentBlock(ModWatercraftMaterial material) {
+        String name = "wood/canoe_component_block/" + material.getNamespace() + "/" + material.getSerializedName();
 
-    private static void putCanoeComponentBlock(ModWatercraftMaterial compatWatercraftMaterial)
-    {
-        String name = "wood/canoe_component_block/" + compatWatercraftMaterial.getNamespace() + "/" + compatWatercraftMaterial.getSerializedName();
-        Supplier<CanoeComponentBlock> supplier = () ->
-        {
-            Supplier<Block> woodSupplier = getStrippedLogBlock(compatWatercraftMaterial);
-            var strippedLog = woodSupplier.get();
+        Supplier<CanoeComponentBlock> supplier = () -> {
+            Block strippedLogBlock = material.getStrippedLogBlock();
+            if (strippedLogBlock == Blocks.AIR) {
+                // Fallback - should not happen
+                strippedLogBlock = Blocks.OAK_LOG;
+            }
+            BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(strippedLogBlock)
+                    .noOcclusion();
 
-            BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(strippedLog).noOcclusion();
-            return new CanoeComponentBlock(properties, compatWatercraftMaterial);
+            return new CanoeComponentBlock(properties, material);
         };
 
         var entry = BLOCKS.register(name, supplier);
-        _CANOE_COMPONENT_BLOCKS.put(compatWatercraftMaterial, entry);
+        _CANOE_COMPONENT_BLOCKS.put(material, entry);
     }
 
     private static void putAngledBoatFrameBlock(ModWatercraftMaterial compatWatercraftMaterial)
@@ -121,9 +125,5 @@ public class CompatFirmaCivBlocks
                 new FirmacivFlatWoodenBoatFrameBlock(compatWatercraftMaterial, BlockBehaviour.Properties.copy(FirmacivBlocks.BOAT_FRAME_FLAT.get()));
         var entry = BLOCKS.register(name, supplier);
         _WOODEN_BOAT_FRAME_FLAT.put(compatWatercraftMaterial, entry);
-    }
-
-    public static Supplier<Block> getStrippedLogBlock(ModWatercraftMaterial material) {
-        return () -> ForgeRegistries.BLOCKS.getValue(material.getStrippedLogTexture());
     }
 }

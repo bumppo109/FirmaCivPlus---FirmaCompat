@@ -17,6 +17,7 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Locale;
@@ -101,7 +102,6 @@ public class FirmaCivPlusBlockStateProvider extends BlockStateProvider {
             });
         };
     }
-
 
     private BiConsumer<ModWatercraftMaterial, Supplier<? extends SquaredAngleBlock>> woodRoofing(FirmaCivPlusBlockStateProvider stateProvider) {
         return (watercraftMaterial, registryObject) ->
