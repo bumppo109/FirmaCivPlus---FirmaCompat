@@ -185,7 +185,7 @@ dependencies {
     implementation fg.deobf("curse.maven:selene-499980:7945711")
 
     //Natures Spirit
-    //implementation fg.deobf("curse.maven:natures-spirit-1044992:6962783")
+    implementation fg.deobf("curse.maven:natures-spirit-1044992:6962783")
 
     //Regions Unexplored
     implementation fg.deobf("curse.maven:regions-unexplored-659110:5558225")

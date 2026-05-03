@@ -1,0 +1,6 @@
+{
+  "parent": "alekiships:block/watercraft_frame/angled/template/outer/fourth",
+  "textures": {
+    "plank": "natures_spirit:block/palo_verde_planks"
+  }
+}

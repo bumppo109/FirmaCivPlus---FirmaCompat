@@ -31,8 +31,7 @@ public final class WoodGoodModule extends EveryCompatModule {
 
         ROOFING = SimpleEntrySet.builder(WoodType.class, "roofing",
                         getModBlock("oak_roofing"), () -> VanillaWoodTypes.OAK,
-                        w -> new
-                                SquaredAngleBlock(Blocks.OAK_STAIRS.defaultBlockState(), Utils.copyPropertySafe(w.planks))
+                        w -> new SquaredAngleBlock(Blocks.OAK_STAIRS.defaultBlockState(), Utils.copyPropertySafe(w.planks))
                 )
                 .requiresChildren("planks")
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)

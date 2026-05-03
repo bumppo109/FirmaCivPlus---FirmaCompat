@@ -16,43 +16,44 @@ import net.regions_unexplored.block.RuBlocks;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public enum RUWatercraftMaterial implements ModWatercraftMaterial
 {
     //softwoods, makes canoes
-    CYPRESS(true, RuBlocks.CYPRESS_PLANKS.get(), RuBlocks.STRIPPED_CYPRESS_LOG.get()),
-    LARCH(true, RuBlocks.LARCH_PLANKS.get(), RuBlocks.STRIPPED_LARCH_LOG.get()),
-    PINE(true, RuBlocks.PINE_PLANKS.get(), RuBlocks.STRIPPED_PINE_LOG.get()),
-    SOCOTRA(true, RuBlocks.SOCOTRA_PLANKS.get(), RuBlocks.STRIPPED_SOCOTRA_LOG.get()),
-    JOSHUA(true, RuBlocks.JOSHUA_PLANKS.get(), RuBlocks.STRIPPED_JOSHUA_LOG.get()),
+    CYPRESS(true, RuBlocks.CYPRESS_PLANKS, RuBlocks.STRIPPED_CYPRESS_LOG),
+    LARCH(true, RuBlocks.LARCH_PLANKS, RuBlocks.STRIPPED_LARCH_LOG),
+    PINE(true, RuBlocks.PINE_PLANKS, RuBlocks.STRIPPED_PINE_LOG),
+    SOCOTRA(true, RuBlocks.SOCOTRA_PLANKS, RuBlocks.STRIPPED_SOCOTRA_LOG),
+    JOSHUA(true, RuBlocks.JOSHUA_PLANKS, RuBlocks.STRIPPED_JOSHUA_LOG),
 
-    REDWOOD(false, RuBlocks.REDWOOD_PLANKS.get(), RuBlocks.STRIPPED_REDWOOD_LOG.get()),
-    BAOBAB(false, RuBlocks.BAOBAB_PLANKS.get(), RuBlocks.STRIPPED_BAOBAB_LOG.get()),
-    BLACKWOOD(false, RuBlocks.BLACKWOOD_PLANKS.get(), RuBlocks.STRIPPED_BLACKWOOD_LOG.get()),
-    EUCALYPTUS(false, RuBlocks.EUCALYPTUS_PLANKS.get(), RuBlocks.STRIPPED_EUCALYPTUS_LOG.get()),
-    KAPOK(false, RuBlocks.KAPOK_PLANKS.get(), RuBlocks.STRIPPED_KAPOK_LOG.get()),
-    MAGNOLIA(false, RuBlocks.MAGNOLIA_PLANKS.get(), RuBlocks.STRIPPED_MAGNOLIA_LOG.get()),
-    MAPLE(false, RuBlocks.MAPLE_PLANKS.get(), RuBlocks.STRIPPED_MAPLE_LOG.get()),
-    MAUVE(false, RuBlocks.MAUVE_PLANKS.get(), RuBlocks.STRIPPED_MAUVE_LOG.get()),
-    PALM(false, RuBlocks.PALM_PLANKS.get(), RuBlocks.STRIPPED_PALM_LOG.get()),
-    WILLOW(false, RuBlocks.WILLOW_PLANKS.get(), RuBlocks.STRIPPED_WILLOW_LOG.get()),
-    BRIMWOOD(false, RuBlocks.BRIMWOOD_PLANKS.get(), RuBlocks.STRIPPED_BRIMWOOD_LOG.get()),
-    COBALT(false, RuBlocks.COBALT_PLANKS.get(), RuBlocks.STRIPPED_COBALT_LOG.get()),
+    REDWOOD(false, RuBlocks.REDWOOD_PLANKS, RuBlocks.STRIPPED_REDWOOD_LOG),
+    BAOBAB(false, RuBlocks.BAOBAB_PLANKS, RuBlocks.STRIPPED_BAOBAB_LOG),
+    BLACKWOOD(false, RuBlocks.BLACKWOOD_PLANKS, RuBlocks.STRIPPED_BLACKWOOD_LOG),
+    EUCALYPTUS(false, RuBlocks.EUCALYPTUS_PLANKS, RuBlocks.STRIPPED_EUCALYPTUS_LOG),
+    KAPOK(false, RuBlocks.KAPOK_PLANKS, RuBlocks.STRIPPED_KAPOK_LOG),
+    MAGNOLIA(false, RuBlocks.MAGNOLIA_PLANKS, RuBlocks.STRIPPED_MAGNOLIA_LOG),
+    MAPLE(false, RuBlocks.MAPLE_PLANKS, RuBlocks.STRIPPED_MAPLE_LOG),
+    MAUVE(false, RuBlocks.MAUVE_PLANKS, RuBlocks.STRIPPED_MAUVE_LOG),
+    PALM(false, RuBlocks.PALM_PLANKS, RuBlocks.STRIPPED_PALM_LOG),
+    WILLOW(false, RuBlocks.WILLOW_PLANKS, RuBlocks.STRIPPED_WILLOW_LOG),
+    BRIMWOOD(false, RuBlocks.BRIMWOOD_PLANKS, RuBlocks.STRIPPED_BRIMWOOD_LOG),
+    COBALT(false, RuBlocks.COBALT_PLANKS, RuBlocks.STRIPPED_COBALT_LOG),
 
-    GREEN_BIOSHROOM(false, RuBlocks.GREEN_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_GREEN_BIOSHROOM_STEM.get()),
-    BLUE_BIOSHROOM(false, RuBlocks.BLUE_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_BLUE_BIOSHROOM_STEM.get()),
-    YELLOW_BIOSHROOM(false, RuBlocks.YELLOW_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_YELLOW_BIOSHROOM_STEM.get()),
-    PINK_BIOSHROOM(false, RuBlocks.PINK_BIOSHROOM_PLANKS.get(), RuBlocks.STRIPPED_PINK_BIOSHROOM_STEM.get())
+    GREEN_BIOSHROOM(false, RuBlocks.GREEN_BIOSHROOM_PLANKS, RuBlocks.STRIPPED_GREEN_BIOSHROOM_STEM),
+    BLUE_BIOSHROOM(false, RuBlocks.BLUE_BIOSHROOM_PLANKS, RuBlocks.STRIPPED_BLUE_BIOSHROOM_STEM),
+    YELLOW_BIOSHROOM(false, RuBlocks.YELLOW_BIOSHROOM_PLANKS, RuBlocks.STRIPPED_YELLOW_BIOSHROOM_STEM),
+    PINK_BIOSHROOM(false, RuBlocks.PINK_BIOSHROOM_PLANKS, RuBlocks.STRIPPED_PINK_BIOSHROOM_STEM)
     ;
 
     public final boolean isSoftwood;
-    private final Block planks;
-    private final Block strippedLog;
+    private final Supplier<Block> planks;
+    private final Supplier<Block> strippedLog;
 
     final String woodNamespace = "regions_unexplored";
 
 
-    RUWatercraftMaterial(boolean isSoftwood, Block planks, Block strippedLog) {
+    RUWatercraftMaterial(boolean isSoftwood, Supplier<Block> planks, Supplier<Block> strippedLog) {
         this.isSoftwood = isSoftwood;
         this.planks = planks;
         this.strippedLog = strippedLog;
@@ -97,19 +98,19 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public Item getStrippedLog()
     {
-        return strippedLog.asItem();
+        return strippedLog.get().asItem();
     }
 
     @Override
     public Block getPlanks()
     {
-        return planks;
+        return planks.get();
     }
 
     @Override
     public Block getStrippedLogBlock()
     {
-        return strippedLog;
+        return strippedLog.get();
     }
 
     @Override
@@ -147,7 +148,7 @@ public enum RUWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public BlockState getDeckBlock()
     {
-        return planks.defaultBlockState();
+        return planks.get().defaultBlockState();
     }
 
     @Override

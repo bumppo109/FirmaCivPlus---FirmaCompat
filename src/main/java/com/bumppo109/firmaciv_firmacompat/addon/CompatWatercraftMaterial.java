@@ -16,32 +16,33 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public enum CompatWatercraftMaterial implements ModWatercraftMaterial
 {
     //softwoods, makes canoes
-    BIRCH(true, Blocks.BIRCH_PLANKS, Blocks.STRIPPED_BIRCH_LOG),
-    JUNGLE(true, Blocks.JUNGLE_PLANKS, Blocks.STRIPPED_JUNGLE_LOG),
-    SPRUCE(true, Blocks.SPRUCE_PLANKS, Blocks.STRIPPED_SPRUCE_LOG),
+    BIRCH(true, () -> Blocks.BIRCH_PLANKS, () -> Blocks.STRIPPED_BIRCH_LOG),
+    JUNGLE(true, () -> Blocks.JUNGLE_PLANKS, () -> Blocks.STRIPPED_JUNGLE_LOG),
+    SPRUCE(true, () -> Blocks.SPRUCE_PLANKS, () -> Blocks.STRIPPED_SPRUCE_LOG),
 
-    ACACIA(false, Blocks.ACACIA_PLANKS, Blocks.STRIPPED_ACACIA_LOG),
-    CHERRY(false, Blocks.CHERRY_PLANKS, Blocks.STRIPPED_CHERRY_LOG),
-    DARK_OAK(false, Blocks.DARK_OAK_PLANKS, Blocks.STRIPPED_DARK_OAK_LOG),
-    MANGROVE(false, Blocks.MANGROVE_PLANKS, Blocks.STRIPPED_MANGROVE_LOG),
-    OAK(false, Blocks.OAK_PLANKS, Blocks.STRIPPED_OAK_LOG),
+    ACACIA(false, () -> Blocks.ACACIA_PLANKS, () -> Blocks.STRIPPED_ACACIA_LOG),
+    CHERRY(false, () -> Blocks.CHERRY_PLANKS, () -> Blocks.STRIPPED_CHERRY_LOG),
+    DARK_OAK(false, () -> Blocks.DARK_OAK_PLANKS, () -> Blocks.STRIPPED_DARK_OAK_LOG),
+    MANGROVE(false, () -> Blocks.MANGROVE_PLANKS, () -> Blocks.STRIPPED_MANGROVE_LOG),
+    OAK(false, () -> Blocks.OAK_PLANKS, () -> Blocks.STRIPPED_OAK_LOG),
 
-    CRIMSON(false, Blocks.CRIMSON_PLANKS, Blocks.STRIPPED_CRIMSON_STEM),
-    WARPED(false, Blocks.WARPED_PLANKS, Blocks.STRIPPED_WARPED_STEM),
+    CRIMSON(false, () -> Blocks.CRIMSON_PLANKS, () -> Blocks.STRIPPED_CRIMSON_STEM),
+    WARPED(false, () -> Blocks.WARPED_PLANKS, () -> Blocks.STRIPPED_WARPED_STEM),
     ;
 
     public final boolean isSoftwood;
-    private final Block planks;
-    private final Block strippedLog;
+    private final Supplier<Block> planks;
+    private final Supplier<Block> strippedLog;
 
     final String woodNamespace = "minecraft";
 
 
-    CompatWatercraftMaterial(boolean isSoftwood, Block planks, Block strippedLog) {
+    CompatWatercraftMaterial(boolean isSoftwood, Supplier<Block> planks, Supplier<Block> strippedLog) {
         this.isSoftwood = isSoftwood;
         this.planks = planks;
         this.strippedLog = strippedLog;
@@ -86,19 +87,19 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public Item getStrippedLog()
     {
-        return strippedLog.asItem();
+        return strippedLog.get().asItem();
     }
 
     @Override
     public Block getPlanks()
     {
-        return planks;
+        return planks.get();
     }
 
     @Override
     public Block getStrippedLogBlock()
     {
-        return strippedLog;
+        return strippedLog.get();
     }
 
     @Override
@@ -136,7 +137,7 @@ public enum CompatWatercraftMaterial implements ModWatercraftMaterial
     @Override
     public BlockState getDeckBlock()
     {
-        return planks.defaultBlockState();
+        return planks.get().defaultBlockState();
     }
 
     @Override

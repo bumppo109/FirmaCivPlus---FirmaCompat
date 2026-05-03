@@ -1,0 +1,8 @@
+{
+  "parent": "firmaciv:block/canoe_component_block/template/end/12",
+  "textures": {
+    "0": "natures_spirit:block/stripped_fir_log",
+    "1": "natures_spirit:block/stripped_fir_log_top",
+    "particle": "natures_spirit:block/stripped_fir_log"
+  }
+}
