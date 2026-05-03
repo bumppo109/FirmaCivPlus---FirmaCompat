@@ -6,6 +6,7 @@ import com.bumppo109.firmaciv_firmacompat.ModWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.addon.CompatWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.addon.NatureSpiritWatercraftMaterial;
 import com.mojang.logging.LogUtils;
+import dev.architectury.platform.Mod;
 import net.mehvahdjukaar.every_compat.api.PaletteStrategy;
 import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
@@ -204,125 +205,10 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
                 }
             });
 
-            //Watercraft Entity Textures
-            for (BoatVariant entity : BoatVariant.values()) {
-
-                //TODO - some colors still washed out (dark oak looks like jungle)
-                ResourceLocation baseTexture = ResourceLocation.fromNamespaceAndPath(
-                        FirmaCivFirmaCompat.MOD_ID,
-                        "entity/template/watercraft/" + entity.path
-                );
-
-                ResourceLocation overlayTexture = ResourceLocation.fromNamespaceAndPath(
-                        FirmaCivFirmaCompat.MOD_ID,
-                        "entity/template/watercraft/" + entity.path + "_overlay"
-                );
-
-                ResourceLocation outputLoc = ResourceLocation.fromNamespaceAndPath(
-                        FirmaCivFirmaCompat.MOD_ID,
-                        "entity/watercraft/" + entity.path + "/" +
-                                wood.getNamespace() + "/" + wood.getSerializedName() + "/" + wood.getSerializedName()
-                );
-
-                try (TextureImage base = TextureImage.open(manager, baseTexture);
-                     TextureImage woodTex = TextureImage.open(manager, wood.getPlanksTexture())) {
-
-                    Palette palette = Palette.fromImage(woodTex);
-                    palette.matchSize(16, null);
-
-                    float[] paletteHues = precomputePaletteHues(palette);
-
-                    base.forEachPixel(p -> {
-                        int argb = p.getValue();
-
-                        int a = (argb >> 24) & 255;
-                        if (a == 0) return; // respect transparency properly
-
-                        int r = argb & 255;
-                        int g = (argb >> 8) & 255;
-                        int b = (argb >> 16) & 255;
-
-                        // grayscale luminance from base texture (since you made it grayscale, r≈g≈b)
-                        float brightness = (r + g + b) / (3.0f * 255.0f);
-
-                        float hue = rgbToHue(r, g, b);
-
-                        int idx = nearestHueIndex(hue, paletteHues);
-
-                        HCLColor paletteColor = palette.get(idx).hcl();
-
-                        // IMPORTANT: rebuild color preserving luminance from base
-                        HCLColor shaded = new HCLColor(
-                                paletteColor.hue(),
-                                paletteColor.chroma(),
-                                brightness,              // <-- THIS is what restores shading
-                                paletteColor.alpha()
-                        );
-
-                        int rgb = shaded.asRGB().toInt();
-
-                        // reapply original alpha correctly
-                        p.setValue((a << 24) | (rgb & 0x00FFFFFF));
-                    });
-
-                    // overlay
-                    if (entity != BoatVariant.DUGOUT_CANOE) {
-
-                        try (TextureImage overlay = TextureImage.open(manager, overlayTexture)) {
-                            base.applyOverlayOnExisting(overlay);
-                        } catch (Exception e) {
-                            LOGGER.warn("Missing overlay for {}", entity.path);
-                        }
-                    }
-
-                    byte[] bytes = base.getImage().asByteArray();
-                    CompatDynamicTextures.INSTANCE.addBytes(outputLoc, bytes, ResType.TEXTURES);
-
-                    // =========================
-                    // DYED VARIANTS
-                    // =========================
-
-                    if (entity != BoatVariant.DUGOUT_CANOE &&
-                            entity != BoatVariant.SLOOP_CONSTRUCTION) {
-
-                        for (DyeColor color : DyeColor.values()) {
-
-                            String name = color.getSerializedName();
-
-                            ResourceLocation paintOutputLoc = ResourceLocation.fromNamespaceAndPath(
-                                    FirmaCivFirmaCompat.MOD_ID,
-                                    "entity/watercraft/" + entity.path + "/" +
-                                            wood.getNamespace() + "/" + wood.getSerializedName() + "/" + name
-                            );
-
-                            ResourceLocation overlayCol = ResourceLocation.fromNamespaceAndPath(
-                                    FirmaCivFirmaCompat.MOD_ID,
-                                    "entity/template/watercraft/paint/" + entity.path + "/" + name
-                            );
-
-                            try (TextureImage colOverlay = TextureImage.open(manager, overlayCol)) {
-
-                                TextureImage variant = base.makeCopy();
-                                variant.applyOverlayOnExisting(colOverlay);
-
-                                CompatDynamicTextures.INSTANCE.addBytes(
-                                        paintOutputLoc,
-                                        variant.getImage().asByteArray(),
-                                        ResType.TEXTURES
-                                );
-
-                                variant.close();
-
-                            } catch (Exception e) {
-                                LOGGER.warn("Missing dye overlay {}, {}", entity, color);
-                            }
-                        }
-                    }
-
-                } catch (Exception e) {
-                    LOGGER.error("Failed generating {} {}", entity.path, wood.getSerializedName(), e);
-                }
-            }
+            /** Watercraft Entity Textures
+             *  only used when adding new mod support
+             */
+            //generateBoatVariantTextures(manager, wood);
         }
     }
 
@@ -369,6 +255,127 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
 
     private static float rgbToHue(int r, int g, int b) {
         return java.awt.Color.RGBtoHSB(r, g, b, null)[0];
+    }
+
+    private static void generateBoatVariantTextures(ResourceManager manager, ModWatercraftMaterial wood) {
+        for (BoatVariant entity : BoatVariant.values()) {
+
+            //TODO - some colors still washed out (dark oak looks like jungle)
+            ResourceLocation baseTexture = ResourceLocation.fromNamespaceAndPath(
+                    FirmaCivFirmaCompat.MOD_ID,
+                    "entity/template/watercraft/" + entity.path
+            );
+
+            ResourceLocation overlayTexture = ResourceLocation.fromNamespaceAndPath(
+                    FirmaCivFirmaCompat.MOD_ID,
+                    "entity/template/watercraft/" + entity.path + "_overlay"
+            );
+
+            ResourceLocation outputLoc = ResourceLocation.fromNamespaceAndPath(
+                    FirmaCivFirmaCompat.MOD_ID,
+                    "entity/watercraft/" + entity.path + "/" +
+                            wood.getNamespace() + "/" + wood.getSerializedName() + "/" + wood.getSerializedName()
+            );
+
+            try (TextureImage base = TextureImage.open(manager, baseTexture);
+                 TextureImage woodTex = TextureImage.open(manager, wood.getPlanksTexture())) {
+
+                Palette palette = Palette.fromImage(woodTex);
+                palette.matchSize(16, null);
+
+                float[] paletteHues = precomputePaletteHues(palette);
+
+                base.forEachPixel(p -> {
+                    int argb = p.getValue();
+
+                    int a = (argb >> 24) & 255;
+                    if (a == 0) return; // respect transparency properly
+
+                    int r = argb & 255;
+                    int g = (argb >> 8) & 255;
+                    int b = (argb >> 16) & 255;
+
+                    // grayscale luminance from base texture (since you made it grayscale, r≈g≈b)
+                    float brightness = (r + g + b) / (3.0f * 255.0f);
+
+                    float hue = rgbToHue(r, g, b);
+
+                    int idx = nearestHueIndex(hue, paletteHues);
+
+                    HCLColor paletteColor = palette.get(idx).hcl();
+
+                    // IMPORTANT: rebuild color preserving luminance from base
+                    HCLColor shaded = new HCLColor(
+                            paletteColor.hue(),
+                            paletteColor.chroma(),
+                            brightness,              // <-- THIS is what restores shading
+                            paletteColor.alpha()
+                    );
+
+                    int rgb = shaded.asRGB().toInt();
+
+                    // reapply original alpha correctly
+                    p.setValue((a << 24) | (rgb & 0x00FFFFFF));
+                });
+
+                // overlay
+                if (entity != BoatVariant.DUGOUT_CANOE) {
+
+                    try (TextureImage overlay = TextureImage.open(manager, overlayTexture)) {
+                        base.applyOverlayOnExisting(overlay);
+                    } catch (Exception e) {
+                        LOGGER.warn("Missing overlay for {}", entity.path);
+                    }
+                }
+
+                byte[] bytes = base.getImage().asByteArray();
+                CompatDynamicTextures.INSTANCE.addBytes(outputLoc, bytes, ResType.TEXTURES);
+
+                // =========================
+                // DYED VARIANTS
+                // =========================
+
+                if (entity != BoatVariant.DUGOUT_CANOE &&
+                        entity != BoatVariant.SLOOP_CONSTRUCTION) {
+
+                    for (DyeColor color : DyeColor.values()) {
+
+                        String name = color.getSerializedName();
+
+                        ResourceLocation paintOutputLoc = ResourceLocation.fromNamespaceAndPath(
+                                FirmaCivFirmaCompat.MOD_ID,
+                                "entity/watercraft/" + entity.path + "/" +
+                                        wood.getNamespace() + "/" + wood.getSerializedName() + "/" + name
+                        );
+
+                        ResourceLocation overlayCol = ResourceLocation.fromNamespaceAndPath(
+                                FirmaCivFirmaCompat.MOD_ID,
+                                "entity/template/watercraft/paint/" + entity.path + "/" + name
+                        );
+
+                        try (TextureImage colOverlay = TextureImage.open(manager, overlayCol)) {
+
+                            TextureImage variant = base.makeCopy();
+                            variant.applyOverlayOnExisting(colOverlay);
+
+                            CompatDynamicTextures.INSTANCE.addBytes(
+                                    paintOutputLoc,
+                                    variant.getImage().asByteArray(),
+                                    ResType.TEXTURES
+                            );
+
+                            variant.close();
+
+                        } catch (Exception e) {
+                            LOGGER.warn("Missing dye overlay {}, {}", entity, color);
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                LOGGER.error("Failed generating {} {}", entity.path, wood.getSerializedName(), e);
+            }
+        }
     }
 
     private static float[] precomputePaletteHues(Palette palette) {

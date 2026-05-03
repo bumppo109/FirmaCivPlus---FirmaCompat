@@ -42,8 +42,10 @@ public class FirmaCivFirmaCompat {
         ModItems.ITEMS.register(bus);
 
         if(ModList.get().isLoaded("everycomp")){
-            WoodGoodModule woodModule = new WoodGoodModule();
-            EveryCompatAPI.registerModule(woodModule);
+            if(ModList.get().isLoaded("alekiroofs")) {
+                WoodGoodModule woodModule = new WoodGoodModule();
+                EveryCompatAPI.registerModule(woodModule);
+            }
         }
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
