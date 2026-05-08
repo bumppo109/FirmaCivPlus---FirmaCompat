@@ -4,21 +4,15 @@ import com.bumppo109.firmaciv_firmacompat.CompatFirmaCivBlocks;
 import com.bumppo109.firmaciv_firmacompat.FirmaCivFirmaCompat;
 import com.bumppo109.firmaciv_firmacompat.ModWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.addon.CompatWatercraftMaterial;
-import com.bumppo109.firmaciv_firmacompat.addon.NatureSpiritWatercraftMaterial;
+
 import com.mojang.logging.LogUtils;
-import dev.architectury.platform.Mod;
-import net.mehvahdjukaar.every_compat.api.PaletteStrategy;
-import net.mehvahdjukaar.moonlight.api.resources.RPUtils;
+
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.StaticResource;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynClientResourcesGenerator;
 import net.mehvahdjukaar.moonlight.api.resources.textures.Palette;
-import net.mehvahdjukaar.moonlight.api.resources.textures.PaletteColor;
-import net.mehvahdjukaar.moonlight.api.resources.textures.Respriter;
 import net.mehvahdjukaar.moonlight.api.resources.textures.TextureImage;
 import net.mehvahdjukaar.moonlight.api.util.math.colors.HCLColor;
-import net.mehvahdjukaar.moonlight.api.util.math.colors.RGBColor;
-import net.mehvahdjukaar.moonlight.core.misc.McMetaFile;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.DyeColor;
@@ -26,8 +20,6 @@ import org.slf4j.Logger;
 
 import java.awt.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {

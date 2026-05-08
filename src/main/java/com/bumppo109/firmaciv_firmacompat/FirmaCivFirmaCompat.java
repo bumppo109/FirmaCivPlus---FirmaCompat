@@ -3,8 +3,8 @@ package com.bumppo109.firmaciv_firmacompat;
 import com.bumppo109.firmaciv_firmacompat.addon.CompatWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.addon.NatureSpiritCompatLoader;
 import com.bumppo109.firmaciv_firmacompat.addon.RUCompatLoader;
-import com.bumppo109.firmaciv_firmacompat.addon.RUWatercraftMaterial;
 import com.bumppo109.firmaciv_firmacompat.moonlight.ClientDynamicResourcesHandler;
+import com.bumppo109.firmaciv_firmacompat.moonlight.EveryCompatHandler;
 import com.bumppo109.firmaciv_firmacompat.moonlight.WoodGoodModule;
 import com.mojang.logging.LogUtils;
 import net.mehvahdjukaar.every_compat.api.EveryCompatAPI;
@@ -42,10 +42,7 @@ public class FirmaCivFirmaCompat {
         ModItems.ITEMS.register(bus);
 
         if(ModList.get().isLoaded("everycomp")){
-            if(ModList.get().isLoaded("alekiroofs")) {
-                WoodGoodModule woodModule = new WoodGoodModule();
-                EveryCompatAPI.registerModule(woodModule);
-            }
+            EveryCompatHandler.registerModules();
         }
 
         if (FMLEnvironment.dist == Dist.CLIENT) {

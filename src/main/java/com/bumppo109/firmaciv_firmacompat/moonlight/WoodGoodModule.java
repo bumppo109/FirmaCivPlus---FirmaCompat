@@ -43,13 +43,5 @@ public final class WoodGoodModule extends EveryCompatModule {
         this.addEntry(ROOFING);
 
     }
-
-    @Override
-    public void addDynamicServerResources(Consumer<ResourceGenTask> executor) {
-        super.addDynamicServerResources(executor);
-
-        executor.accept((manager, sink) -> {
-        });
-    }
 }
 
